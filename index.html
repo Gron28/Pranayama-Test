@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pranayama Practice Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        :root {
+            --background-color: #101010;
+            --text-color: #f8f0e3;
+            --ida-blue: #004dab;
+            --pingala-red: #ff2a00;
+            --sushumna-yellow: #fee74d;
+            --sushumna-green: #00a550;
+            --neutral-color: #101010;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column; /* Allow content to stack */
+            align-items: center;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .level-select {
+            margin-bottom: 20px;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+            background-color: #333;
+            color: var(--text-color);
+            border: 1px solid #666;
+            border-radius: 5px;
+        }
+
+        .practice-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 40px 0;
+            height: 270px;
+        }
+
+        .nostril-circle {
+    aspect-ratio: 1 / 1;
+    width: 165px; /* Default size for larger screens */
+    max-width: 20vw; /* Allow responsive scaling */
+    border-radius: 50%; /* Ensure circles stay round */
+    transition: transform 1s linear, opacity 1s linear; /* Smooth transitions */
+}
+
+@media (max-width: 768px) {
+    .nostril-circle {
+        width: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .nostril-circle {
+        width: 80px;
+    }
+}
+
+        .left-nostril {
+            background-color: var(--ida-blue);
+        }
+
+        .right-nostril {
+            background-color: var(--pingala-red);
+        }
+
+        .breath-bar {
+            width: 35px;
+            height: 250px;
+            background-color: var(--neutral-color);
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .breath-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--sushumna-yellow);
+            height: 100%;
+            transition: height 1s linear, background-color 0.3s ease;
+        }
+
+        .breath-fill.hold {
+            background-color: var(--sushumna-green);
+        }
+
+        .instruction {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .timer {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: rgb(110, 110, 110);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .controls button:disabled {
+            background-color: rgb(48, 48, 48);
+            cursor: not-allowed;
+        }
+
+        .stats {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .sound-controls {
+            margin-top: 20px;
+            
+            display: flex;
+            align-items: center; 
+            gap: 10px; 
+        }
+        .sound-controls button,
+        .sound-controls input[type="range"] {
+            margin: 5px;
+        }
+
+        
+        button#soundBtn {
+            background: none;
+            border: none;
+           cursor: pointer;
+            font-size: 32px; /* Increase icon size */
+            color: #f8f0e3;  /* Match the page's text color */
+            display: flex;
+            align-items: center; /* Center content vertically */
+            justify-content: center; /* Center content horizontally */
+    
+            line-height: 1;
+            padding: 0;
+            margin: 0;
+        }
+
+        #volumeSlider {
+    width: 150px; /* Adjust width */
+    height: 5px; /* Simplify thickness */
+    background: #666; /* Neutral background color */
+    border-radius: 5px; /* Smooth edges */
+    outline: none;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default thumb style */
+    width: 15px; /* Thumb size */
+    height: 15px;
+    background: #fee74d; /* Match accent color */
+    border-radius: 50%; /* Circle thumb */
+    cursor: pointer;
+}
+
+#volumeSlider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #fee74d; /* Match accent color */
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+
+
+        .liber-ix-excerpts {
+            margin-top: 40px;
+            font-size: 16px;
+            text-align: left;
+            max-width: 800px;
+        }
+        .liber-ix-excerpts h2 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .liber-ix-excerpts h3 {
+            text-align: center;
+        }
+        #liber-ix-title {
+            color: var(--text-color);
+            text-decoration: none;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Pranayama Practice</h1>
+        <div class="level-select">
+            <select id="level">
+                <option value="1">Level 1 (Out: 20s, In: 10s)</option>
+                <option value="2">Level 2 (Out: 30s, In: 15s)</option>
+                <option value="3">Level 3 (Out: 15s, In: 15s, Hold: 15s)</option>
+                <option value="4">Level 4 (Out: 40s, In: 20s)</option>
+                <option value="5">Level 5 (Out: 20s, In: 10s, Hold: 30s)</option>
+            </select>
+        </div>
+        <div class="practice-area">
+            <div id="left-nostril" class="nostril-circle left-nostril"></div>
+            <div class="breath-bar">
+                <div id="breath-fill" class="breath-fill"></div>
+            </div>
+            <div id="right-nostril" class="nostril-circle right-nostril"></div>
+        </div>
+        <div id="timer" class="timer">00:00</div>
+
+        <div id="instruction" class="instruction">Select a level, deep breath in and press Start to begin</div>
+
+        <div class="controls">
+            <button id="startBtn">Start</button>
+            <button id="pauseBtn" disabled>Pause</button>
+            <button id="resetBtn" disabled>Reset</button>
+        </div>
+
+        <div class="stats">
+            <p>Total Practice Time: <span id="totalTime">00:00:00</span> / Cycles Completed: <span id="cyclesCompleted">0</span></p>
+        </div>
+    </div>
+        <div class="sound-controls">
+            <p>Sound Cues</p>
+            <button id="soundBtn"><i class="fas fa-volume-mute"></i></button>
+            <input type="range" id="volumeSlider" min="0" max="0.3" step="0.01" value="0.02">
+        </div>
+    </div>
+
+    <div class="liber-ix-excerpts">
+        <h2>Excerpt from <a href="LiberIX.pdf" target="_blank" id="liber-ix-title">LIBER E. VEL EXERCITIORVM SVB FIGVRA IX</a>:</h2>
+        <h3>Pranayama—Regularisation of the Breathing</h3>
+        <p>1. At rest. in one of your positions, close the right nostril with the thumb of the right hand and breathe out slowly and completely through the left nostril, while your watch marks 20 seconds. Breathe in through the same nostril for 10 seconds. Changing hands, repeat with the other nostril. Let this be continuous for one hour.</p>
+        <p>2. When this is quite easy to you, increase the periods to 30 and 15 seconds.</p>
+        <p>3. When this is quite easy to you, but not before, breathe out for 15 seconds, in for 15 seconds, and hold the breath for 15 seconds.</p>
+        <p>4. When you can do this with perfect ease and comfort for a whole hour, practise breathing out for 40, in for 20 seconds.</p>
+        <p>5. This being attained, practise breathing out for 20, in for 10, holding the breath for 30 seconds. When this has become perfectly easy to you, you may be admitted for examination, and should you pass, you will be instructed in more complex and difficult practices.</p>
+        <p>6. You will find that the presence of food in the stomach, even in small quantities, makes the practices very difficult.</p>
+        <p>7. Be very careful never to overstrain your powers; especially never get so short of breath that you are compelled to breathe out jerkily or rapidly.</p>
+        <p>8. Strive after depth, fulness, and regularity of breathing.</p>
+        <p>9. Various remarkable phenomena will very probably occur during these practices. They must be carefully analysed and recorded.</p>
+    </div>
+
+    <script>
+        const levelConfigs = {
+            1: { out: 20, in: 10, hold: 0 },
+            2: { out: 30, in: 15, hold: 0 },
+            3: { out: 15, in: 15, hold: 15 },
+            4: { out: 40, in: 20, hold: 0 },
+            5: { out: 20, in: 10, hold: 30 }
+        };
+
+        let timer;
+        let currentPhase = 'ready';
+        let timeLeft = 0;
+        let totalSeconds = 0;
+        let cycles = 0;
+        let currentNostril = 'left';
+        let isPaused = false;
+        let globalVolume = 0.02;
+
+        const elements = {
+            leftNostril: document.getElementById('left-nostril'),
+            rightNostril: document.getElementById('right-nostril'),
+            breathFill: document.getElementById('breath-fill'),
+            instruction: document.getElementById('instruction'),
+            timer: document.getElementById('timer'),
+            totalTime: document.getElementById('totalTime'),
+            cyclesCompleted: document.getElementById('cyclesCompleted'),
+            startBtn: document.getElementById('startBtn'),
+            pauseBtn: document.getElementById('pauseBtn'),
+            resetBtn: document.getElementById('resetBtn'),
+            levelSelect: document.getElementById('level')
+        };
+
+        function pauseAnimation(element) {
+            element.classList.add("paused");
+        }
+
+        function resumeAnimation(element) {
+            element.classList.remove("paused");
+        }
+
+        function updateBreathVisualization(phase, nostril, timeLeft, duration) {
+            const activeNostril = (nostril === 'left') ? elements.leftNostril : elements.rightNostril;
+            const inactiveNostril = (nostril === 'left') ? elements.rightNostril : elements.leftNostril;
+
+            if (phase === 'ready' || phase === 'hold') {
+                inactiveNostril.style.opacity = 1;
+                activeNostril.style.opacity = 1;
+            } else if (phase === 'out' || phase === 'in'){
+                inactiveNostril.style.opacity = 0;
+                activeNostril.style.opacity = 1;
+            }
+
+            if (phase === 'ready') {
+                elements.breathFill.style.height = '100%';
+                elements.breathFill.classList.remove('hold');
+                activeNostril.style.transform = 'scale(1)';
+                inactiveNostril.style.transform = 'scale(1)';
+            } else if (phase === 'out') {
+                const scale = 1 - (1 - 0.2) * ((duration - timeLeft) / duration);
+                activeNostril.style.transform = `scale(${scale})`;
+                inactiveNostril.style.transform = 'scale(1)';
+                elements.breathFill.style.height = `${100 - ((duration - timeLeft) / duration) * 100}%`;
+                elements.breathFill.classList.remove('hold');
+            } else if (phase === 'in') {
+                const scale = 0.2 + (1 - 0.2) * ((duration - timeLeft) / duration);
+                activeNostril.style.transform = `scale(${scale})`;
+                inactiveNostril.style.transform = 'scale(1)';
+                elements.breathFill.style.height = `${((duration - timeLeft) / duration) * 100}%`;
+                elements.breathFill.classList.remove('hold');
+            } else if (phase === 'hold') {
+                elements.breathFill.classList.add('hold');
+                elements.breathFill.style.height = '100%';
+                activeNostril.style.transform = 'scale(1)';
+                inactiveNostril.style.transform = 'scale(1)';
+            }
+
+            elements.instruction.textContent =
+                phase === 'ready' ? 'Select a level, deep breath in and press Start to begin' :
+                phase === 'out' ? `Breathe out through ${nostril} nostril` :
+                phase === 'in' ? `Breathe in through ${nostril} nostril` :
+                'Hold breath';
+        }
+
+        function updateTimer() {
+    if (!isPaused && currentPhase !== 'ready') {
+        timeLeft--;
+        totalSeconds++;
+        elements.totalTime.textContent = formatTime(totalSeconds, true);
+        elements.timer.textContent = formatTime(timeLeft);
+
+        const config = levelConfigs[elements.levelSelect.value];
+        const duration = config[currentPhase === 'out' ? 'out' : currentPhase === 'in' ? 'in' : 'hold'];
+        updateBreathVisualization(currentPhase, currentNostril, timeLeft, duration);
+
+        playTickSound(); // Play metronome tick here
+
+        if (timeLeft <= 0) {
+            nextPhase();
+        }
+    }
+}
+
+function nextPhase() {
+    const config = levelConfigs[elements.levelSelect.value];
+
+    if (currentPhase === 'out') {
+        currentPhase = 'in';
+        timeLeft = config.in;
+        playPhaseTransitionSound('in'); // Inhale cue
+    } else if (currentPhase === 'in') {
+        if (config.hold > 0) {
+            currentPhase = 'hold';
+            timeLeft = config.hold;
+            playPhaseTransitionSound('hold'); // Hold cue
+        } else {
+            currentPhase = 'out';
+            currentNostril = currentNostril === 'left' ? 'right' : 'left';
+            timeLeft = config.out;
+            playPhaseTransitionSound('out'); // Exhale cue
+            cycles++;
+            elements.cyclesCompleted.textContent = cycles;
+        }
+    } else if (currentPhase === 'hold') {
+        currentPhase = 'out';
+        currentNostril = currentNostril === 'left' ? 'right' : 'left';
+        timeLeft = config.out;
+        playPhaseTransitionSound('out'); // Exhale cue
+        cycles++;
+        elements.cyclesCompleted.textContent = cycles;
+    }
+
+    updateBreathVisualization(currentPhase, currentNostril, timeLeft, config[currentPhase]);
+}
+
+
+        function formatTime(seconds, includeHours = false) {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            if (includeHours) {
+                return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+            }
+            return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+
+        elements.startBtn.addEventListener('click', () => {
+            if (currentPhase === 'ready' || isPaused) {
+                const config = levelConfigs[elements.levelSelect.value];
+                if (currentPhase === 'ready') {
+                    currentPhase = 'out';
+                    timeLeft = config.out;
+                    currentNostril = 'left';
+                }
+                isPaused = false;
+                timer = setInterval(updateTimer, 1000);
+                elements.startBtn.disabled = true;
+                elements.pauseBtn.disabled = false;
+                elements.resetBtn.disabled = false;
+                elements.levelSelect.disabled = true;
+                elements.startBtn.textContent = 'Start';
+
+                resumeAnimation(elements.leftNostril);
+                resumeAnimation(elements.rightNostril);
+                resumeAnimation(elements.breathFill);
+            }
+        });
+        elements.pauseBtn.addEventListener('click', () => {
+            clearInterval(timer);
+            isPaused = true;
+            elements.startBtn.disabled = false;
+            elements.startBtn.textContent = 'Resume';
+            pauseAnimation(elements.leftNostril);
+            pauseAnimation(elements.rightNostril);
+            pauseAnimation(elements.breathFill);
+        });
+
+        elements.resetBtn.addEventListener('click', () => {
+            clearInterval(timer);
+            currentPhase = 'ready';
+            timeLeft = 0;
+            totalSeconds = 0;
+            cycles = 0;
+            currentNostril = 'left';
+            isPaused = false;
+
+            elements.startBtn.disabled = false;
+            elements.startBtn.textContent = 'Start';
+            elements.pauseBtn.disabled = true;
+            elements.resetBtn.disabled = true;
+            elements.levelSelect.disabled = false;
+            elements.timer.textContent = '00:00';
+            elements.totalTime.textContent = '00:00:00';
+            elements.cyclesCompleted.textContent = '0';
+
+            updateBreathVisualization('ready', currentNostril, 0, 0);
+        });
+
+        elements.levelSelect.addEventListener('change', () => {
+            elements.resetBtn.click();
+        });
+
+        const soundBtn = document.getElementById('soundBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        let soundEnabled = false;
+
+        soundBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    const icon = soundBtn.querySelector('i');
+    icon.className = soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+});
+
+
+        volumeSlider.addEventListener('input', () => {
+    globalVolume = parseFloat(volumeSlider.value);
+});
+
+function playTickSound(frequency = 220) {
+    if (!soundEnabled) return;
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.type = 'sine'; 
+    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime); // Use globalVolume
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1); // Short tick
+}
+
+
+function playPhaseTransitionSound(phase) {
+    if (!soundEnabled) return;
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.type = 'sine'; 
+    oscillator.frequency.setValueAtTime(
+        phase === 'in' ? 340 : phase === 'out' ? 300 : 450, // Different tones for each phase
+        audioContext.currentTime
+    );
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime); // Use globalVolume
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.5); // Slightly longer cue
+}
+
+window.onload = () => {
+    volumeSlider.value = globalVolume; // Set slider to match initial globalVolume
+};
+
+
+    </script>
+</body>
+</html>
