@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pranayama Practice Guide</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
 :root {
     --background-color: #101010;
@@ -14,12 +17,13 @@
     --sushumna-yellow: #fee74d;
     --sushumna-green: #00a550;
     --neutral-color: #101010;
+    --font-family-base: 'Space Mono', monospace;
 }
 
 body {
     background-color: var(--background-color);
     color: var(--text-color);
-    font-family: sans-serif; /* More accessible default font */
+    font-family: var(--font-family-base);
     margin: 0;
     padding: 20px;
     min-height: 100vh; /* Occupy full viewport height */
@@ -29,11 +33,15 @@ body {
     line-height: 1; /* Improved readability */
 }
 
+h1, h2, h3, p, button, select, .timer, .instruction, .stats {
+    font-family: var(--font-family-base);
+}
+
 .container {
     text-align: center;
     width: 90%; /* More responsive width */
     max-width: 800px;
-    margin-bottom: 15px; /* Add some space at the bottom */
+    margin-bottom: 5px; /* Add some space at the bottom */
 }
 
         h1 {
@@ -113,7 +121,7 @@ body {
         }
 
         .instruction {
-            font-size: 20px;
+            font-size: 17px;
             margin-bottom: 20px;
         }
 
@@ -131,7 +139,7 @@ body {
 
 .control-button {
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 14px;
     background-color: rgb(110, 110, 110);
     color: var(--text-color);
     border: none;
@@ -149,7 +157,7 @@ body {
 
 .stats {
     margin-top: 20px;
-    font-size: 1rem;
+    font-size: 14px;
 }
 
 .stats p {
@@ -211,7 +219,7 @@ body {
     line-height: 1.5;
     margin-bottom: 10px;
     font-size: 0.9rem;
-    color: #ddd;
+    color: var(--text-color);
 }
 
 .liber-ix-excerpts {
@@ -219,7 +227,7 @@ body {
     font-size: 0.9rem;
     text-align: left;
     max-width: 800px;
-    color: #ccc;
+    color: var(--text-color);
     line-height: 1.6;
 }
 
@@ -290,7 +298,7 @@ body {
 
     <section class="recommendations">
         <h3>Recommendations:</h3>
-        <p>Approach this pranayama practice with ease. Think of it as guiding your breath, not forcing it. And remember to take notes.</p>
+        <p>Please approach this practice with ease. Think of it as guiding your breath, not forcing it. And remember to take notes.</p>
     </section>
 
     <section class="liber-ix-excerpts">
@@ -386,7 +394,7 @@ body {
             }
 
             elements.instruction.textContent =
-                phase === 'ready' ? 'Select a level, deep breath in and press Start to begin' :
+                phase === 'ready' ? 'Select a level and press Start to begin' :
                 phase === 'out' ? `Breathe out through ${nostril} nostril` :
                 phase === 'in' ? `Breathe in through ${nostril} nostril` :
                 'Hold breath';
