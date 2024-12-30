@@ -5,35 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pranayama Practice Guide</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-
     <style>
-        :root {
-            --background-color: #101010;
-            --text-color: #f8f0e3;
-            --ida-blue: #004dab;
-            --pingala-red: #ff2a00;
-            --sushumna-yellow: #fee74d;
-            --sushumna-green: #00a550;
-            --neutral-color: #101010;
-        }
+:root {
+    --background-color: #101010;
+    --text-color: #f8f0e3;
+    --ida-blue: #004dab;
+    --pingala-red: #ff2a00;
+    --sushumna-yellow: #fee74d;
+    --sushumna-green: #00a550;
+    --neutral-color: #101010;
+}
 
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            min-height: 70vh;
-            display: flex;
-            flex-direction: column; /* Allow content to stack */
-            align-items: center;
-        }
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-family: sans-serif; /* More accessible default font */
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh; /* Occupy full viewport height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1; /* Improved readability */
+}
 
-        .container {
-            text-align: center;
-            width: 100%;
-            max-width: 800px;
-        }
+.container {
+    text-align: center;
+    width: 90%; /* More responsive width */
+    max-width: 800px;
+    margin-bottom: 15px; /* Add some space at the bottom */
+}
 
         h1 {
             margin-bottom: 20px;
@@ -117,105 +118,126 @@
         }
 
         .timer {
-            font-size: 48px;
+            font-size: 61px;
             margin-bottom: 20px;
         }
 
-        .controls button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: rgb(110, 110, 110);
-            color: var(--text-color);
-            border: none;
-            border-radius: 5px;
-            margin: 0 10px;
-            cursor: pointer;
-        }
 
-        .controls button:disabled {
-            background-color: rgb(48, 48, 48);
-            cursor: not-allowed;
-        }
+        .controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
 
-        .stats {
-            margin-top: 20px;
-            font-size: 14px;
-        }
+.control-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: rgb(110, 110, 110);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
 
-        .sound-controls {
-            margin-top: 20px;
-            
-            display: flex;
-            align-items: center; 
-            gap: 10px; 
-        }
-        .sound-controls button,
-        .sound-controls input[type="range"] {
-            margin: 5px;
-        }
+.control-button:disabled {
+    background-color: rgb(48, 48, 48);
+    cursor: not-allowed;
+}
 
-        
-        button#soundBtn {
-            background: none;
-            border: none;
-           cursor: pointer;
-            font-size: 32px; /* Increase icon size */
-            color: #f8f0e3;  /* Match the page's text color */
-            display: flex;
-            align-items: center; /* Center content vertically */
-            justify-content: center; /* Center content horizontally */
-    
-            line-height: 1;
-            padding: 0;
-            margin: 0;
-        }
+.stats {
+    margin-top: 20px;
+    font-size: 1rem;
+}
 
-        #volumeSlider {
-    width: 150px; /* Adjust width */
-    height: 5px; /* Simplify thickness */
-    background: #666; /* Neutral background color */
-    border-radius: 5px; /* Smooth edges */
+.stats p {
+    margin-bottom: 5px;
+}
+.sound-controls {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.sound-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    color: var(--text-color);
+    padding: 0;
+}
+
+#volumeSlider {
+    width: 100px;
+    height: 8px;
+    background: #666;
+    border-radius: 5px;
     outline: none;
 }
 
+/* Chrome, Safari, Edge, Opera */
 #volumeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Remove default thumb style */
-    width: 15px; /* Thumb size */
-    height: 15px;
-    background: #fee74d; /* Match accent color */
-    border-radius: 50%; /* Circle thumb */
-    cursor: pointer;
-}
-
-#volumeSlider::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
     width: 15px;
     height: 15px;
-    background: #fee74d; /* Match accent color */
+    background: var(--sushumna-yellow);
     border-radius: 50%;
     cursor: pointer;
 }
 
+/* Firefox */
+#volumeSlider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: var(--sushumna-yellow);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none; /* Remove default border in Firefox */
+}
 
+.recommendations {
+    text-align: left;
+    max-width: 800px;
+    margin-bottom: 20px;
+}
 
-        .liber-ix-excerpts {
-            margin-top: 40px;
-            font-size: 16px;
-            text-align: left;
-            max-width: 800px;
-        }
-        .liber-ix-excerpts h2 {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .liber-ix-excerpts h3 {
-            text-align: center;
-        }
-        #liber-ix-title {
-            color: var(--text-color);
-            text-decoration: none;
-            text-decoration: underline;
-        }
+.recommendations p {
+    line-height: 1.5;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.liber-ix-excerpts {
+    margin-top: 40px;
+    font-size: 0.9rem;
+    text-align: left;
+    max-width: 800px;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.liber-ix-excerpts h2 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+    text-align: center;
+    color: var(--text-color);
+}
+
+.liber-ix-excerpts h3 {
+    text-align: center;
+}
+
+#liber-ix-title {
+    color: var(--text-color);
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
@@ -230,48 +252,63 @@
                 <option value="5">Level 5 (Out: 20s, In: 10s, Hold: 30s)</option>
             </select>
         </div>
-        <div class="practice-area">
-            <div id="left-nostril" class="nostril-circle left-nostril"></div>
-            <div class="breath-bar">
+        <section class="practice-area" aria-live="polite">
+            <div id="left-nostril" class="nostril-circle left-nostril" aria-label="Left nostril"></div>
+            <div class="breath-bar" aria-label="Breath indicator">
                 <div id="breath-fill" class="breath-fill"></div>
             </div>
-            <div id="right-nostril" class="nostril-circle right-nostril"></div>
-        </div>
+            <div id="right-nostril" class="nostril-circle right-nostril" aria-label="Right nostril"></div>
+        </section>
         <div id="timer" class="timer">00:00</div>
 
-        <div id="instruction" class="instruction">Select a level, deep breath in and press Start to begin</div>
+        <div id="instruction" class="instruction">Select a level and press Start to begin</div>
 
-        <div class="controls">
-            <button id="startBtn">Start</button>
-            <button id="pauseBtn" disabled>Pause</button>
-            <button id="resetBtn" disabled>Reset</button>
-        </div>
+        <section class="controls">
+            <button id="startBtn" class="control-button" aria-label="Start practice">
+                Start
+            </button>
+            <button id="pauseBtn" class="control-button" aria-label="Pause practice" disabled>
+                Pause
+            </button>
+            <button id="resetBtn" class="control-button" aria-label="Reset practice" disabled>
+                Reset
+            </button>
+        </section>
 
         <div class="stats">
             <p>Total Practice Time: <span id="totalTime">00:00:00</span> / Cycles Completed: <span id="cyclesCompleted">0</span></p>
         </div>
     </div>
-        <div class="sound-controls">
-            <p>Sound Cues</p>
-            <button id="soundBtn"><i class="fas fa-volume-mute"></i></button>
-            <input type="range" id="volumeSlider" min="0" max="0.3" step="0.01" value="0.02">
-        </div>
+    <section class="sound-controls">
+        <p>Sound Cues</p>
+        <button id="soundBtn" aria-label="Toggle sound cues">
+            <i class="fas fa-volume-mute"></i>
+        </button>
+        <input type="range" id="volumeSlider" min="0" max="0.3" step="0.01" value="0.02" aria-label="Adjust sound volume">
+    </section>
     </div>
 
-    <div class="liber-ix-excerpts">
-        <h2>Excerpt from <a href="LiberIX.pdf" target="_blank" id="liber-ix-title">LIBER E. VEL EXERCITIORVM SVB FIGVRA IX</a>:</h2>
+    <section class="recommendations">
+        <h3>Recommendations:</h3>
+        <p>Approach this pranayama practice with ease. Think of it as guiding your breath, not forcing it. And remember to take notes.</p>
+    </section>
+
+    <section class="liber-ix-excerpts">
+        <h2>Excerpt from <a href="https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf" target="_blank" id="liber-ix-title">LIBER E. VEL EXERCITIORVM SVB FIGVRA IX</a>:</h2>
         <h3>Pranayama—Regularisation of the Breathing</h3>
-        <p>1. At rest. in one of your positions, close the right nostril with the thumb of the right hand and breathe out slowly and completely through the left nostril, while your watch marks 20 seconds. Breathe in through the same nostril for 10 seconds. Changing hands, repeat with the other nostril. Let this be continuous for one hour.</p>
-        <p>2. When this is quite easy to you, increase the periods to 30 and 15 seconds.</p>
-        <p>3. When this is quite easy to you, but not before, breathe out for 15 seconds, in for 15 seconds, and hold the breath for 15 seconds.</p>
-        <p>4. When you can do this with perfect ease and comfort for a whole hour, practise breathing out for 40, in for 20 seconds.</p>
-        <p>5. This being attained, practise breathing out for 20, in for 10, holding the breath for 30 seconds. When this has become perfectly easy to you, you may be admitted for examination, and should you pass, you will be instructed in more complex and difficult practices.</p>
-        <p>6. You will find that the presence of food in the stomach, even in small quantities, makes the practices very difficult.</p>
-        <p>7. Be very careful never to overstrain your powers; especially never get so short of breath that you are compelled to breathe out jerkily or rapidly.</p>
-        <p>8. Strive after depth, fulness, and regularity of breathing.</p>
-        <p>9. Various remarkable phenomena will very probably occur during these practices. They must be carefully analysed and recorded.</p>
-    </div>
-
+        <ol>
+            <li>At rest. in one of your positions, close the right nostril with the thumb of the right hand and breathe out slowly and completely through the left nostril, while your watch marks 20 seconds. Breathe in through the same nostril for 10 seconds. Changing hands, repeat with the other nostril. Let this be continuous for one hour.</li>
+            <li>When this is quite easy to you, increase the periods to 30 and 15 seconds.</li>
+            <li>When this is quite easy to you, but not before, breathe out for 15 seconds, in for 15 seconds, and hold the breath for 15 seconds.</li>
+            <li>When you can do this with perfect ease and comfort for a whole hour, practise breathing out for 40, in for 20 seconds.</li>
+            <li>This being attained, practise breathing out for 20, in for 10, holding the breath for 30 seconds. When this has become perfectly easy to you, you may be admitted for examination, and should you pass, you will be instructed in more complex and difficult practices.</li>
+            <li>You will find that the presence of food in the stomach, even in small quantities, makes the practices very difficult.</li>
+            <li>Be very careful never to overstrain your powers; especially never get so short of breath that you are compelled to breathe out jerkily or rapidly.</li>
+            <li>Strive after depth, fulness, and regularity of breathing.</li>
+            <li>Various remarkable phenomena will very probably occur during these practices. They must be carefully analysed and recorded.</li>
+        </ol>
+    </section>
+</div>
     <script>
         const levelConfigs = {
             1: { out: 20, in: 10, hold: 0 },
