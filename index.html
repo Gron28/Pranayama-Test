@@ -373,6 +373,7 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
 }
 function nextPhase() {
     const config = levelConfigs[elements.levelSelect.value];
+
     if (currentPhase === 'out') {
         currentPhase = 'in';
         timeLeft = config.in;
@@ -387,17 +388,22 @@ function nextPhase() {
             currentNostril = currentNostril === 'left' ? 'right' : 'left';
             timeLeft = config.out;
             playPhaseTransitionSound('out');
-            cycles++;
-            elements.cyclesCompleted.textContent = cycles;
+            if (currentNostril === 'left') { 
+                cycles++;
+                elements.cyclesCompleted.textContent = cycles;
+            }
         }
     } else if (currentPhase === 'hold') {
         currentPhase = 'out';
         currentNostril = currentNostril === 'left' ? 'right' : 'left';
         timeLeft = config.out;
         playPhaseTransitionSound('out');
-        cycles++;
-        elements.cyclesCompleted.textContent = cycles;
+        if (currentNostril === 'left') { 
+            cycles++;
+            elements.cyclesCompleted.textContent = cycles;
+        }
     }
+
     updateBreathVisualization(currentPhase, currentNostril, timeLeft, config[currentPhase]);
 }
         function formatTime(seconds, includeHours = false) {
