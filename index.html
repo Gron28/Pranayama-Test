@@ -9,43 +9,58 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-:root {
-    --background-color: #101010;
-    --text-color: #f8f0e3;
-    --ida-blue: #004dab;
-    --pingala-red: #ff2a00;
-    --sushumna-yellow: #fee74d;
-    --sushumna-green: #00a550;
-    --neutral-color: #101010;
-    --font-family-base: 'Space Mono', monospace;
-}
-body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    font-family: var(--font-family-base);
-    margin: 0;
-    padding: 20px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1;
-}
-h1, h2, h3, p, button, select, .timer, .instruction, .stats {
-    font-family: var(--font-family-base);
-}
-.container {
-    text-align: center;
-    width: 90%;
-    max-width: 800px;
-    margin-bottom: 5px;
-}
+        :root {
+            --background-color: #101010;
+            --text-color: #f8f0e3;
+            --ida-blue: #004dab;
+            --pingala-red: #ff2a00;
+            --sushumna-yellow: #fee74d;
+            --sushumna-green: #00a550;
+            --neutral-color: #101010;
+            --font-family-base: 'Space Mono', monospace;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-family: var(--font-family-base);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 1;
+        }
+
+        h1,
+        h2,
+        h3,
+        p,
+        button,
+        select,
+        .timer,
+        .instruction,
+        .stats {
+            font-family: var(--font-family-base);
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+            max-width: 800px;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
         h1 {
             margin-bottom: 20px;
         }
+
         .level-select {
             margin-bottom: 20px;
         }
+
         select {
             padding: 8px;
             font-size: 16px;
@@ -53,7 +68,14 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             color: var(--text-color);
             border: 1px solid #666;
             border-radius: 5px;
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23F8F0E3" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position-x: 100%;
+            background-position-y: 5px;
         }
+
         .practice-area {
             display: flex;
             justify-content: center;
@@ -62,32 +84,43 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             margin: 40px 0;
             height: 270px;
         }
+
         .nostril-circle {
-    aspect-ratio: 1 / 1;
-    width: 165px;
-    max-width: 30vw;
-    border-radius: 50%;
-    transition: transform 1s linear, opacity 1s linear;
-}
-@media (max-width: 768px) {
-    .nostril-circle {
-        width: 165px;
-    }
-}
-@media (max-width: 480px) {
-    .nostril-circle {
-        width: 130px;
-    }
-    select {
-            width: 350px
+            aspect-ratio: 1 / 1;
+            width: 165px;
+            max-width: 30vw;
+            border-radius: 50%;
+            transition: transform 1s linear, opacity 1s linear;
         }
-}
+
+        @media (max-width: 768px) {
+            .nostril-circle {
+                width: 165px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nostril-circle {
+                width: 130px;
+            }
+
+            select {
+                width: calc(100% - 20px);
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+
         .left-nostril {
             background-color: var(--ida-blue);
         }
+
         .right-nostril {
             background-color: var(--pingala-red);
         }
+
         .breath-bar {
             width: 35px;
             height: 250px;
@@ -96,6 +129,7 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             position: relative;
             overflow: hidden;
         }
+
         .breath-fill {
             position: absolute;
             bottom: 0;
@@ -105,119 +139,197 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             height: 100%;
             transition: height 1s linear, background-color 0.3s ease;
         }
+
         .breath-fill.hold {
             background-color: var(--sushumna-green);
         }
+
         .instruction {
             font-size: 17px;
             margin-bottom: 20px;
         }
+
         .timer {
             font-size: 61px;
             margin-bottom: 20px;
         }
+
         .controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-.control-button {
-    padding: 10px 20px;
-    font-size: 14px;
-    background-color: rgb(110, 110, 110);
-    color: var(--text-color);
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-}
-.control-button:disabled {
-    background-color: rgb(48, 48, 48);
-    cursor: not-allowed;
-}
-.stats {
-    margin-top: 20px;
-    font-size: 14px;
-}
-.stats p {
-    margin-bottom: 5px;
-}
-.sound-controls {
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-.sound-controls button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.5em;
-    color: var(--text-color);
-    padding: 0;
-}
-#volumeSlider {
-    width: 100px;
-    height: 8px;
-    background: #666;
-    border-radius: 5px;
-    outline: none;
-}
-#volumeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    background: var(--sushumna-yellow);
-    border-radius: 50%;
-    cursor: pointer;
-}
-#volumeSlider::-moz-range-thumb {
-    width: 15px;
-    height: 15px;
-    background: var(--sushumna-yellow);
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-}
-.recommendations {
-    text-align: left;
-    max-width: 800px;
-    margin-bottom: 20px;
-}
-.recommendations p {
-    line-height: 1.5;
-    margin-bottom: 10px;
-    font-size: 0.9rem;
-    color: var(--text-color);
-}
-.liber-ix-excerpts {
-    margin-top: 40px;
-    font-size: 0.9rem;
-    text-align: left;
-    max-width: 800px;
-    color: var(--text-color);
-    line-height: 1.6;
-    margin-bottom: 65px;
-}
-.liber-ix-excerpts h2 {
-    font-size: 1.1em;
-    margin-bottom: 10px;
-    text-align: center;
-    color: var(--text-color);
-}
-.liber-ix-excerpts h3 {
-    text-align: center;
-}
-#liber-ix-title {
-    color: var(--text-color);
-    text-decoration: underline;
-}
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .control-button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: rgb(110, 110, 110);
+            color: var(--text-color);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .control-button:disabled {
+            background-color: rgb(48, 48, 48);
+            cursor: not-allowed;
+        }
+
+        .stats {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .stats p {
+            margin-bottom: 5px;
+        }
+
+        .sound-controls {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sound-controls button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: var(--text-color);
+            padding: 0;
+        }
+
+        #volumeSlider {
+            width: 100px;
+            height: 8px;
+            background: #666;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #volumeSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background: var(--sushumna-yellow);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #volumeSlider::-moz-range-thumb {
+            width: 15px;
+            height: 15px;
+            background: var(--sushumna-yellow);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .recommendations {
+            text-align: left;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        .recommendations p {
+            line-height: 1.5;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .liber-ix-excerpts {
+            margin-top: 40px;
+            font-size: 0.9rem;
+            text-align: left;
+            max-width: 800px;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 65px;
+        }
+
+        .liber-ix-excerpts h2 {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        .liber-ix-excerpts h3 {
+            text-align: center;
+        }
+
+        #liber-ix-title {
+            color: var(--text-color);
+            text-decoration: underline;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #333;
+            color: var(--text-color);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .modal-content input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #666;
+            border-radius: 4px;
+            background-color: #444;
+            color: var(--text-color);
+        }
+
+        .modal-content button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-family-base);
+        }
+
+        .modal-content button.save {
+            background-color: var(--sushumna-yellow);
+            color: #101010;
+        }
+
+        .modal-content button.cancel {
+            background-color: #666;
+            color: var(--text-color);
+            margin-left: 10px;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>Pranayama Practice</h1>
@@ -228,6 +340,7 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
                 <option value="3">Level 3 (Out: 15s, In: 15s, Hold: 15s)</option>
                 <option value="4">Level 4 (Out: 40s, In: 20s)</option>
                 <option value="5">Level 5 (Out: 20s, In: 10s, Hold: 30s)</option>
+                <option value="custom">Custom</option>
             </select>
         </div>
         <section class="practice-area" aria-live="polite">
@@ -259,12 +372,23 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
         <button id="soundBtn" aria-label="Toggle sound cues">
             <i class="fas fa-volume-mute"></i>
         </button>
-        <input type="range" id="volumeSlider" min="0" max="0.3" step="0.01" value="0.02" aria-label="Adjust sound volume">
+        <input type="range" id="volumeSlider" min="0" max="0.18" step="0.01" value="0.02" aria-label="Adjust sound volume">
     </section>
     </div>
     <section class="recommendations">
-        <h3>Recommendations:</h3>
-        <p>Please approach this practice with ease. Think of it as guiding your breath, not forcing it. And remember to take notes.</p>
+        <h3>Recommendations and Precautions:</h3>
+        <p>Please approach this practice with ease. Think of it as guiding your breath, not forcing it.</p>
+        <p>Listen to your body. If you experience discomfort, dizziness, or shortness of breath, stop and rest.</p>
+        <p>Increase your practice duration and intensity very slowly over time.</p>
+        <p>If done improperly, fast breathing pranayama can cause hyperventilation and may overactivate the sympathetic nervous system, leading to stress on the body. Avoid prolonged or rapid breathing without guidance.</p>
+        <p>If you are pregnant or have health conditions like high blood pressure, asthma, epilepsy, or heart problems, consult your doctor before practicing.</p>
+
+        <h4 class="sources-links">Sources:</h4>
+
+        <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3415184/#sec1-5" target="_blank">Health Impacts of Yoga and Pranayama</a></p>
+        <p><a href="https://philpapers.org/archive/RAVPOL.pdf" target="_blank">Pranayama and its Effects</a></p>
+        <p><a href="https://www.researchgate.net/publication/273292173_EFFECTS_OF_PRACTICE_OF_PRANAYAMA_ON_CONTROL_OF_LIFE_STYLE_DISORDERS" target="_blank">Effects of Pranayama on Lifestyle Disorders</a></p>
+
     </section>
     <section class="liber-ix-excerpts">
         <h2>Excerpt from <a href="https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf" target="_blank" id="liber-ix-title">LIBER E. VEL EXERCITIORVM SVB FIGVRA IX</a>:</h2>
@@ -281,7 +405,22 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             <li>Various remarkable phenomena will very probably occur during these practices. They must be carefully analysed and recorded.</li>
         </ol>
     </section>
-</div>
+    </div>
+
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button"></span>
+            <h2>Custom Breath Settings</h2>
+            <label for="customIn">Inhale (seconds):</label>
+            <input type="number" id="customIn" min="1">
+            <label for="customOut">Exhale (seconds):</label>
+            <input type="number" id="customOut" min="1">
+            <label for="customHold">Hold (seconds):</label>
+            <input type="number" id="customHold" min="0">
+            <button type="button" class="save">Save</button>
+            <button type="button" class="cancel">Cancel</button>
+        </div>
+    </div>
     <script>
         const levelConfigs = {
             1: { out: 20, in: 10, hold: 0 },
@@ -309,7 +448,11 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             startBtn: document.getElementById('startBtn'),
             pauseBtn: document.getElementById('pauseBtn'),
             resetBtn: document.getElementById('resetBtn'),
-            levelSelect: document.getElementById('level')
+            levelSelect: document.getElementById('level'),
+            customModal: document.getElementById('customModal'),
+            customIn: document.getElementById('customIn'),
+            customOut: document.getElementById('customOut'),
+            customHold: document.getElementById('customHold')
         };
         function pauseAnimation(element) {
             element.classList.add("paused");
@@ -323,7 +466,7 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             if (phase === 'ready' || phase === 'hold') {
                 inactiveNostril.style.opacity = 1;
                 activeNostril.style.opacity = 1;
-            } else if (phase === 'out' || phase === 'in'){
+            } else if (phase === 'out' || phase === 'in') {
                 inactiveNostril.style.opacity = 0;
                 activeNostril.style.opacity = 1;
             }
@@ -357,55 +500,55 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
                 'Hold breath';
         }
         function updateTimer() {
-    if (!isPaused && currentPhase !== 'ready') {
-        timeLeft--;
-        totalSeconds++;
-        elements.totalTime.textContent = formatTime(totalSeconds, true);
-        elements.timer.textContent = formatTime(timeLeft);
-        const config = levelConfigs[elements.levelSelect.value];
-        const duration = config[currentPhase === 'out' ? 'out' : currentPhase === 'in' ? 'in' : 'hold'];
-        updateBreathVisualization(currentPhase, currentNostril, timeLeft, duration);
-        playTickSound();
-        if (timeLeft <= 0) {
-            nextPhase();
-        }
-    }
-}
-function nextPhase() {
-    const config = levelConfigs[elements.levelSelect.value];
-
-    if (currentPhase === 'out') {
-        currentPhase = 'in';
-        timeLeft = config.in;
-        playPhaseTransitionSound('in');
-    } else if (currentPhase === 'in') {
-        if (config.hold > 0) {
-            currentPhase = 'hold';
-            timeLeft = config.hold;
-            playPhaseTransitionSound('hold');
-        } else {
-            currentPhase = 'out';
-            currentNostril = currentNostril === 'left' ? 'right' : 'left';
-            timeLeft = config.out;
-            playPhaseTransitionSound('out');
-            if (currentNostril === 'left') { 
-                cycles++;
-                elements.cyclesCompleted.textContent = cycles;
+            if (!isPaused && currentPhase !== 'ready') {
+                timeLeft--;
+                totalSeconds++;
+                elements.totalTime.textContent = formatTime(totalSeconds, true);
+                elements.timer.textContent = formatTime(timeLeft);
+                const selectedLevel = elements.levelSelect.value;
+                const config = levelConfigs[selectedLevel] || customConfig;
+                const duration = config[currentPhase === 'out' ? 'out' : currentPhase === 'in' ? 'in' : 'hold'];
+                updateBreathVisualization(currentPhase, currentNostril, timeLeft, duration);
+                playTickSound();
+                if (timeLeft <= 0) {
+                    nextPhase();
+                }
             }
         }
-    } else if (currentPhase === 'hold') {
-        currentPhase = 'out';
-        currentNostril = currentNostril === 'left' ? 'right' : 'left';
-        timeLeft = config.out;
-        playPhaseTransitionSound('out');
-        if (currentNostril === 'left') { 
-            cycles++;
-            elements.cyclesCompleted.textContent = cycles;
+        function nextPhase() {
+            const selectedLevel = elements.levelSelect.value;
+            const config = levelConfigs[selectedLevel] || customConfig;
+            if (currentPhase === 'out') {
+                currentPhase = 'in';
+                timeLeft = config.in;
+                playPhaseTransitionSound('in');
+            } else if (currentPhase === 'in') {
+                if (config.hold > 0) {
+                    currentPhase = 'hold';
+                    timeLeft = config.hold;
+                    playPhaseTransitionSound('hold');
+                } else {
+                    currentPhase = 'out';
+                    currentNostril = currentNostril === 'left' ? 'right' : 'left';
+                    timeLeft = config.out;
+                    playPhaseTransitionSound('out');
+                    if (currentNostril === 'left') {
+                        cycles++;
+                        elements.cyclesCompleted.textContent = cycles;
+                    }
+                }
+            } else if (currentPhase === 'hold') {
+                currentPhase = 'out';
+                currentNostril = currentNostril === 'left' ? 'right' : 'left';
+                timeLeft = config.out;
+                playPhaseTransitionSound('out');
+                if (currentNostril === 'left') {
+                    cycles++;
+                    elements.cyclesCompleted.textContent = cycles;
+                }
+            }
+            updateBreathVisualization(currentPhase, currentNostril, timeLeft, config[currentPhase]);
         }
-    }
-
-    updateBreathVisualization(currentPhase, currentNostril, timeLeft, config[currentPhase]);
-}
         function formatTime(seconds, includeHours = false) {
             const h = Math.floor(seconds / 3600);
             const m = Math.floor((seconds % 3600) / 60);
@@ -417,7 +560,11 @@ function nextPhase() {
         }
         elements.startBtn.addEventListener('click', () => {
             if (currentPhase === 'ready' || isPaused) {
-                const config = levelConfigs[elements.levelSelect.value];
+                const selectedLevel = elements.levelSelect.value;
+                let config = levelConfigs[selectedLevel];
+                if (selectedLevel === 'custom') {
+                    config = customConfig;
+                }
                 if (currentPhase === 'ready') {
                     currentPhase = 'out';
                     timeLeft = config.out;
@@ -462,52 +609,106 @@ function nextPhase() {
             elements.cyclesCompleted.textContent = '0';
             updateBreathVisualization('ready', currentNostril, 0, 0);
         });
-        elements.levelSelect.addEventListener('change', () => {
-            elements.resetBtn.click();
+
+        let customConfig = {};
+        const modal = document.getElementById("customModal");
+        const levelSelect = document.getElementById("level");
+        const modalCloseButton = document.querySelector("#customModal .close-button");
+        const modalCancelButton = document.querySelector('#customModal .cancel');
+        const modalSaveButton = document.querySelector('#customModal .save');
+
+        levelSelect.addEventListener('change', () => {
+            if (levelSelect.value === 'custom') {
+                elements.customIn.value = customConfig.in || '';
+                elements.customOut.value = customConfig.out || '';
+                elements.customHold.value = customConfig.hold || 0;
+                modal.style.display = "block";
+            } else {
+                elements.resetBtn.click();
+            }
         });
+
+        modalCloseButton.addEventListener('click', () => {
+            modal.style.display = "none";
+            if (levelSelect.value === 'custom') {
+                levelSelect.value = '1';
+            }
+        });
+
+        modalCancelButton.addEventListener('click', () => {
+            modal.style.display = "none";
+            if (levelSelect.value === 'custom') {
+                levelSelect.value = '1';
+            }
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                if (levelSelect.value === 'custom') {
+                    levelSelect.value = '1';
+                }
+            }
+        });
+
+        modalSaveButton.addEventListener('click', function() {
+            const inhale = parseInt(elements.customIn.value, 10);
+            const exhale = parseInt(elements.customOut.value, 10);
+            const hold = parseInt(elements.customHold.value, 10);
+
+            if (inhale > 0 && exhale > 0) {
+                customConfig = { in: inhale, out: exhale, hold: hold };
+                const selectedOption = levelSelect.options[levelSelect.selectedIndex];
+                selectedOption.textContent = `Custom (In: ${inhale}s, Out: ${exhale}s, Hold: ${hold}s)`;
+                modal.style.display = "none";
+            } else {
+                alert("Inhale and Exhale times must be greater than 0.");
+            }
+        });
+
         const soundBtn = document.getElementById('soundBtn');
         const volumeSlider = document.getElementById('volumeSlider');
         let soundEnabled = false;
         soundBtn.addEventListener('click', () => {
-    soundEnabled = !soundEnabled;
-    const icon = soundBtn.querySelector('i');
-    icon.className = soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
-});
+            soundEnabled = !soundEnabled;
+            const icon = soundBtn.querySelector('i');
+            icon.className = soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+        });
         volumeSlider.addEventListener('input', () => {
-    globalVolume = parseFloat(volumeSlider.value);
-});
-function playTickSound(frequency = 220) {
-    if (!soundEnabled) return;
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.1);
-}
-function playPhaseTransitionSound(phase) {
-    if (!soundEnabled) return;
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(
-        phase === 'in' ? 340 : phase === 'out' ? 300 : 450,
-        audioContext.currentTime
-    );
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.5);
-}
-window.onload = () => {
-    volumeSlider.value = globalVolume;
-};
+            globalVolume = parseFloat(volumeSlider.value);
+        });
+        function playTickSound(frequency = 220) {
+            if (!soundEnabled) return;
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+        function playPhaseTransitionSound(phase) {
+            if (!soundEnabled) return;
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(
+                phase === 'in' ? 340 : phase === 'out' ? 300 : 450,
+                audioContext.currentTime
+            );
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+        window.onload = () => {
+            volumeSlider.value = globalVolume;
+        };
     </script>
 </body>
 </html>
