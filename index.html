@@ -19,39 +19,33 @@
     --neutral-color: #101010;
     --font-family-base: 'Space Mono', monospace;
 }
-
 body {
     background-color: var(--background-color);
     color: var(--text-color);
     font-family: var(--font-family-base);
     margin: 0;
     padding: 20px;
-    min-height: 100vh; /* Occupy full viewport height */
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    line-height: 1; /* Improved readability */
+    line-height: 1;
 }
-
 h1, h2, h3, p, button, select, .timer, .instruction, .stats {
     font-family: var(--font-family-base);
 }
-
 .container {
     text-align: center;
-    width: 90%; /* More responsive width */
+    width: 90%;
     max-width: 800px;
-    margin-bottom: 5px; /* Add some space at the bottom */
+    margin-bottom: 5px;
 }
-
         h1 {
             margin-bottom: 20px;
         }
-
         .level-select {
             margin-bottom: 20px;
         }
-
         select {
             padding: 8px;
             font-size: 16px;
@@ -60,7 +54,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             border: 1px solid #666;
             border-radius: 5px;
         }
-
         .practice-area {
             display: flex;
             justify-content: center;
@@ -69,21 +62,18 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             margin: 40px 0;
             height: 270px;
         }
-
         .nostril-circle {
     aspect-ratio: 1 / 1;
-    width: 165px; /* Default size for larger screens */
-    max-width: 30vw; /* Allow responsive scaling */
-    border-radius: 50%; /* Ensure circles stay round */
-    transition: transform 1s linear, opacity 1s linear; /* Smooth transitions */
+    width: 165px;
+    max-width: 30vw;
+    border-radius: 50%;
+    transition: transform 1s linear, opacity 1s linear;
 }
-
 @media (max-width: 768px) {
     .nostril-circle {
         width: 180px;
     }
 }
-
 @media (max-width: 480px) {
     .nostril-circle {
         width: 130px;
@@ -92,11 +82,9 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
         .left-nostril {
             background-color: var(--ida-blue);
         }
-
         .right-nostril {
             background-color: var(--pingala-red);
         }
-
         .breath-bar {
             width: 35px;
             height: 250px;
@@ -105,7 +93,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             position: relative;
             overflow: hidden;
         }
-
         .breath-fill {
             position: absolute;
             bottom: 0;
@@ -115,28 +102,22 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             height: 100%;
             transition: height 1s linear, background-color 0.3s ease;
         }
-
         .breath-fill.hold {
             background-color: var(--sushumna-green);
         }
-
         .instruction {
             font-size: 17px;
             margin-bottom: 20px;
         }
-
         .timer {
             font-size: 61px;
             margin-bottom: 20px;
         }
-
-
         .controls {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
-
 .control-button {
     padding: 10px 20px;
     font-size: 14px;
@@ -149,17 +130,14 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
     align-items: center;
     gap: 5px;
 }
-
 .control-button:disabled {
     background-color: rgb(48, 48, 48);
     cursor: not-allowed;
 }
-
 .stats {
     margin-top: 20px;
     font-size: 14px;
 }
-
 .stats p {
     margin-bottom: 5px;
 }
@@ -170,7 +148,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
     justify-content: center;
     gap: 10px;
 }
-
 .sound-controls button {
     background: none;
     border: none;
@@ -179,7 +156,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
     color: var(--text-color);
     padding: 0;
 }
-
 #volumeSlider {
     width: 100px;
     height: 8px;
@@ -187,8 +163,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
     border-radius: 5px;
     outline: none;
 }
-
-/* Chrome, Safari, Edge, Opera */
 #volumeSlider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -198,30 +172,25 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
     border-radius: 50%;
     cursor: pointer;
 }
-
-/* Firefox */
 #volumeSlider::-moz-range-thumb {
     width: 15px;
     height: 15px;
     background: var(--sushumna-yellow);
     border-radius: 50%;
     cursor: pointer;
-    border: none; /* Remove default border in Firefox */
+    border: none;
 }
-
 .recommendations {
     text-align: left;
     max-width: 800px;
     margin-bottom: 20px;
 }
-
 .recommendations p {
     line-height: 1.5;
     margin-bottom: 10px;
     font-size: 0.9rem;
     color: var(--text-color);
 }
-
 .liber-ix-excerpts {
     margin-top: 40px;
     font-size: 0.9rem;
@@ -230,18 +199,15 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
     color: var(--text-color);
     line-height: 1.6;
 }
-
 .liber-ix-excerpts h2 {
     font-size: 1.1em;
     margin-bottom: 10px;
     text-align: center;
     color: var(--text-color);
 }
-
 .liber-ix-excerpts h3 {
     text-align: center;
 }
-
 #liber-ix-title {
     color: var(--text-color);
     text-decoration: underline;
@@ -268,9 +234,7 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             <div id="right-nostril" class="nostril-circle right-nostril" aria-label="Right nostril"></div>
         </section>
         <div id="timer" class="timer">00:00</div>
-
         <div id="instruction" class="instruction">Select a level and press Start to begin</div>
-
         <section class="controls">
             <button id="startBtn" class="control-button" aria-label="Start practice">
                 Start
@@ -282,7 +246,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
                 Reset
             </button>
         </section>
-
         <div class="stats">
             <p>Total Practice Time: <span id="totalTime">00:00:00</span> / Cycles Completed: <span id="cyclesCompleted">0</span></p>
         </div>
@@ -295,12 +258,10 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
         <input type="range" id="volumeSlider" min="0" max="0.3" step="0.01" value="0.02" aria-label="Adjust sound volume">
     </section>
     </div>
-
     <section class="recommendations">
         <h3>Recommendations:</h3>
         <p>Please approach this practice with ease. Think of it as guiding your breath, not forcing it. And remember to take notes.</p>
     </section>
-
     <section class="liber-ix-excerpts">
         <h2>Excerpt from <a href="https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf" target="_blank" id="liber-ix-title">LIBER E. VEL EXERCITIORVM SVB FIGVRA IX</a>:</h2>
         <h3>Pranayama—Regularisation of the Breathing</h3>
@@ -325,7 +286,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             4: { out: 40, in: 20, hold: 0 },
             5: { out: 20, in: 10, hold: 30 }
         };
-
         let timer;
         let currentPhase = 'ready';
         let timeLeft = 0;
@@ -334,7 +294,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
         let currentNostril = 'left';
         let isPaused = false;
         let globalVolume = 0.02;
-
         const elements = {
             leftNostril: document.getElementById('left-nostril'),
             rightNostril: document.getElementById('right-nostril'),
@@ -348,19 +307,15 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
             resetBtn: document.getElementById('resetBtn'),
             levelSelect: document.getElementById('level')
         };
-
         function pauseAnimation(element) {
             element.classList.add("paused");
         }
-
         function resumeAnimation(element) {
             element.classList.remove("paused");
         }
-
         function updateBreathVisualization(phase, nostril, timeLeft, duration) {
             const activeNostril = (nostril === 'left') ? elements.leftNostril : elements.rightNostril;
             const inactiveNostril = (nostril === 'left') ? elements.rightNostril : elements.leftNostril;
-
             if (phase === 'ready' || phase === 'hold') {
                 inactiveNostril.style.opacity = 1;
                 activeNostril.style.opacity = 1;
@@ -368,7 +323,6 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
                 inactiveNostril.style.opacity = 0;
                 activeNostril.style.opacity = 1;
             }
-
             if (phase === 'ready') {
                 elements.breathFill.style.height = '100%';
                 elements.breathFill.classList.remove('hold');
@@ -392,50 +346,43 @@ h1, h2, h3, p, button, select, .timer, .instruction, .stats {
                 activeNostril.style.transform = 'scale(1)';
                 inactiveNostril.style.transform = 'scale(1)';
             }
-
             elements.instruction.textContent =
                 phase === 'ready' ? 'Select a level and press Start to begin' :
                 phase === 'out' ? `Breathe out through ${nostril} nostril` :
                 phase === 'in' ? `Breathe in through ${nostril} nostril` :
                 'Hold breath';
         }
-
         function updateTimer() {
     if (!isPaused && currentPhase !== 'ready') {
         timeLeft--;
         totalSeconds++;
         elements.totalTime.textContent = formatTime(totalSeconds, true);
         elements.timer.textContent = formatTime(timeLeft);
-
         const config = levelConfigs[elements.levelSelect.value];
         const duration = config[currentPhase === 'out' ? 'out' : currentPhase === 'in' ? 'in' : 'hold'];
         updateBreathVisualization(currentPhase, currentNostril, timeLeft, duration);
-
-        playTickSound(); // Play metronome tick here
-
+        playTickSound();
         if (timeLeft <= 0) {
             nextPhase();
         }
     }
 }
-
 function nextPhase() {
     const config = levelConfigs[elements.levelSelect.value];
-
     if (currentPhase === 'out') {
         currentPhase = 'in';
         timeLeft = config.in;
-        playPhaseTransitionSound('in'); // Inhale cue
+        playPhaseTransitionSound('in');
     } else if (currentPhase === 'in') {
         if (config.hold > 0) {
             currentPhase = 'hold';
             timeLeft = config.hold;
-            playPhaseTransitionSound('hold'); // Hold cue
+            playPhaseTransitionSound('hold');
         } else {
             currentPhase = 'out';
             currentNostril = currentNostril === 'left' ? 'right' : 'left';
             timeLeft = config.out;
-            playPhaseTransitionSound('out'); // Exhale cue
+            playPhaseTransitionSound('out');
             cycles++;
             elements.cyclesCompleted.textContent = cycles;
         }
@@ -443,15 +390,12 @@ function nextPhase() {
         currentPhase = 'out';
         currentNostril = currentNostril === 'left' ? 'right' : 'left';
         timeLeft = config.out;
-        playPhaseTransitionSound('out'); // Exhale cue
+        playPhaseTransitionSound('out');
         cycles++;
         elements.cyclesCompleted.textContent = cycles;
     }
-
     updateBreathVisualization(currentPhase, currentNostril, timeLeft, config[currentPhase]);
 }
-
-
         function formatTime(seconds, includeHours = false) {
             const h = Math.floor(seconds / 3600);
             const m = Math.floor((seconds % 3600) / 60);
@@ -461,7 +405,6 @@ function nextPhase() {
             }
             return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         }
-
         elements.startBtn.addEventListener('click', () => {
             if (currentPhase === 'ready' || isPaused) {
                 const config = levelConfigs[elements.levelSelect.value];
@@ -477,7 +420,6 @@ function nextPhase() {
                 elements.resetBtn.disabled = false;
                 elements.levelSelect.disabled = true;
                 elements.startBtn.textContent = 'Start';
-
                 resumeAnimation(elements.leftNostril);
                 resumeAnimation(elements.rightNostril);
                 resumeAnimation(elements.breathFill);
@@ -492,7 +434,6 @@ function nextPhase() {
             pauseAnimation(elements.rightNostril);
             pauseAnimation(elements.breathFill);
         });
-
         elements.resetBtn.addEventListener('click', () => {
             clearInterval(timer);
             currentPhase = 'ready';
@@ -501,7 +442,6 @@ function nextPhase() {
             cycles = 0;
             currentNostril = 'left';
             isPaused = false;
-
             elements.startBtn.disabled = false;
             elements.startBtn.textContent = 'Start';
             elements.pauseBtn.disabled = true;
@@ -510,71 +450,54 @@ function nextPhase() {
             elements.timer.textContent = '00:00';
             elements.totalTime.textContent = '00:00:00';
             elements.cyclesCompleted.textContent = '0';
-
             updateBreathVisualization('ready', currentNostril, 0, 0);
         });
-
         elements.levelSelect.addEventListener('change', () => {
             elements.resetBtn.click();
         });
-
         const soundBtn = document.getElementById('soundBtn');
         const volumeSlider = document.getElementById('volumeSlider');
-
         let soundEnabled = false;
-
         soundBtn.addEventListener('click', () => {
     soundEnabled = !soundEnabled;
     const icon = soundBtn.querySelector('i');
     icon.className = soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
 });
-
-
         volumeSlider.addEventListener('input', () => {
     globalVolume = parseFloat(volumeSlider.value);
 });
-
 function playTickSound(frequency = 220) {
     if (!soundEnabled) return;
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
-
-    oscillator.type = 'sine'; 
+    oscillator.type = 'sine';
     oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
     oscillator.connect(gainNode);
     gainNode.connect(audioContext.destination);
-
-    gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime); // Use globalVolume
+    gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
     oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.1); // Short tick
+    oscillator.stop(audioContext.currentTime + 0.1);
 }
-
-
 function playPhaseTransitionSound(phase) {
     if (!soundEnabled) return;
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
-
-    oscillator.type = 'sine'; 
+    oscillator.type = 'sine';
     oscillator.frequency.setValueAtTime(
-        phase === 'in' ? 340 : phase === 'out' ? 300 : 450, // Different tones for each phase
+        phase === 'in' ? 340 : phase === 'out' ? 300 : 450,
         audioContext.currentTime
     );
     oscillator.connect(gainNode);
     gainNode.connect(audioContext.destination);
-
-    gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime); // Use globalVolume
+    gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
     oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.5); // Slightly longer cue
+    oscillator.stop(audioContext.currentTime + 0.5);
 }
-
 window.onload = () => {
-    volumeSlider.value = globalVolume; // Set slider to match initial globalVolume
+    volumeSlider.value = globalVolume;
 };
-
-
     </script>
 </body>
 </html>
