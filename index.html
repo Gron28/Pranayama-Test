@@ -509,7 +509,7 @@
         function playTickSound() {
             if (soundEnabled && !isTickPlaying) {
                 isTickPlaying = true;
-                createSound(155, 0.1);
+                createSound(185, 0.15);
                 setTimeout(() => {
                     isTickPlaying = false;
                 }, 150);
@@ -749,7 +749,6 @@
             const exhale = parseInt(elements.customOut.value, 10);
             const hold = parseInt(elements.customHold.value, 10);
 
-            // Remove any existing error messages
             const existingErrorMessage = modalContent.querySelector('.error-message');
             if (existingErrorMessage) {
                 modalContent.removeChild(existingErrorMessage);
