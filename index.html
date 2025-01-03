@@ -193,7 +193,6 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 40px;
         }
 
         .sound-controls button {
@@ -232,10 +231,14 @@
             border: none;
         }
 
+        .sound-recommendation {
+            margin-bottom: 45px;
+        }
+
         .recommendations {
             text-align: left;
             max-width: 800px;
-            margin-bottom: 25px;
+            margin-bottom: 65px;
         }
 
         .recommendations h3{
@@ -362,7 +365,7 @@
             <div id="right-nostril" class="nostril-circle right-nostril" aria-label="Right nostril"></div>
         </section>
         <div id="timer" class="timer">00:00</div>
-        <div id="instruction" class="instruction">Select a level and press Start to begin</div>
+        <div id="instruction" class="instruction">Select a level, breathe in and press Start to begin</div>
         <section class="controls">
             <button id="startBtn" class="control-button" aria-label="Start practice">
                 Start
@@ -385,16 +388,18 @@
         </button>
         <input type="range" id="volumeSlider" min="0" max="0.18" step="0.01" value="0.02" aria-label="Adjust sound volume">
     </section>
+    <div class="sound-recommendation">
+        <p>(Headphones and low volumes recommended)</p>
+    </div>
     </div>
     <section class="recommendations">
         <h3>Context:</h3>
         <p>This practice is based on the pranayama exercise described in Aleister Crowley's <a href="https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf" target="_blank">Liber E. vel Exercitiorum, sub figura IX</a>. While the text uses the general term "pranayama", the described technique closely aligns with Nadi Shodhana Pranayama, also known as alternate nostril breathing.</p>
     
-        <h3>Recommendations and Precautions:</h3>
+        <h3>Recommendations and Precautions for a Safe Practice:</h3>
         <p>Please approach this practice with ease. Think of it as guiding your breath, not forcing it.</p>
         <p>Practice in a quiet, comfortable space, seated with your spine straight. Ensure your stomach is empty to avoid discomfort during prolonged breathing exercises.</p>
         <p>Listen to your body. If you experience discomfort, dizziness, or shortness of breath, stop the practice and rest.</p>
-        <p>Increase your practice duration and intensity very slowly over time.</p>
         <p>If done improperly, fast breathing pranayama can cause hyperventilation and may overactivate the sympathetic nervous system, leading to stress on the body. Avoid prolonged or rapid breathing without guidance.</p>
         <p>If you are pregnant or have health conditions like high blood pressure, asthma, epilepsy, or heart problems, consult your doctor before practicing.</p>
         <h4>This guide is not a substitute for professional medical advice or supervision.</h4>
@@ -571,7 +576,7 @@
                 inactiveNostril.style.transform = 'scale(1)';
             }
             elements.instruction.textContent =
-                phase === 'ready' ? 'Select a level and press Start to begin' :
+                phase === 'ready' ? 'Select a level, breathe in and press Start to begin' :
                 phase === 'out' ? `Breathe out through ${nostril} nostril` :
                 phase === 'in' ? `Breathe in through ${nostril} nostril` :
                 'Hold breath';
@@ -663,7 +668,7 @@
                 elements.startBtn.disabled = true;
                 elements.pauseBtn.disabled = false;
                 elements.resetBtn.disabled = false;
-                elements.levelSelect.disabled = true;
+                elements.levelSelect.disabled = false;
                 elements.startBtn.textContent = 'Start';
                 resumeAnimation(elements.leftNostril);
                 resumeAnimation(elements.rightNostril);
@@ -681,6 +686,7 @@
             pauseAnimation(elements.leftNostril);
             pauseAnimation(elements.rightNostril);
             pauseAnimation(elements.breathFill);
+            elements.levelSelect.disabled = false;
         });
         elements.resetBtn.addEventListener('click', () => {
             clearInterval(timer);
