@@ -193,6 +193,7 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
+            margin-bottom: 40px;
         }
 
         .sound-controls button {
@@ -234,12 +235,17 @@
         .recommendations {
             text-align: left;
             max-width: 800px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .recommendations h3{
+            margin-top: 40px;
+            margin-bottom: 0px;
         }
 
         .recommendations p {
             line-height: 1.5;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             font-size: 0.9rem;
             color: var(--text-color);
         }
@@ -256,7 +262,7 @@
             max-width: 800px;
             color: var(--text-color);
             line-height: 1.6;
-            margin-bottom: 65px;
+            margin-bottom: 35px;
         }
 
         .liber-ix-excerpts h2 {
@@ -294,7 +300,7 @@
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
-            max-width: 500px;
+            max-width: 330px;
             border-radius: 5px;
             text-align: left;
         }
@@ -305,7 +311,7 @@
         }
 
         .modal-content input[type="number"] {
-            width: 100%;
+            width: 90%;
             padding: 8px;
             margin-bottom: 15px;
             border: 1px solid #666;
@@ -381,18 +387,25 @@
     </section>
     </div>
     <section class="recommendations">
+        <h4>This guide is not a substitute for professional medical advice or supervision.</h4>
+        <h3>Context:</h3>
+        <p>This practice is based on the pranayama exercise described in Aleister Crowley's <a href="https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf" target="_blank">Liber E. vel Exercitiorum, sub figura IX</a>. While the text uses the general term "pranayama", the described technique closely aligns with Nadi Shodhana Pranayama, also known as alternate nostril breathing.</p>
+    
         <h3>Recommendations and Precautions:</h3>
         <p>Please approach this practice with ease. Think of it as guiding your breath, not forcing it.</p>
-        <p>Listen to your body. If you experience discomfort, dizziness, or shortness of breath, stop and rest.</p>
+        <p>Practice in a quiet, comfortable space, seated with your spine straight. Ensure your stomach is empty to avoid discomfort during prolonged breathing exercises.</p>
+        <p>Listen to your body. If you experience discomfort, dizziness, or shortness of breath, stop the practice and rest.</p>
         <p>Increase your practice duration and intensity very slowly over time.</p>
         <p>If done improperly, fast breathing pranayama can cause hyperventilation and may overactivate the sympathetic nervous system, leading to stress on the body. Avoid prolonged or rapid breathing without guidance.</p>
         <p>If you are pregnant or have health conditions like high blood pressure, asthma, epilepsy, or heart problems, consult your doctor before practicing.</p>
 
-        <h4 class="sources-links">Sources:</h4>
+        <h3 class="sources-links">Sources:</h3>
 
         <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3415184/#sec1-5" target="_blank">Health Impacts of Yoga and Pranayama</a></p>
         <p><a href="https://philpapers.org/archive/RAVPOL.pdf" target="_blank">Pranayama and its Effects</a></p>
         <p><a href="https://www.researchgate.net/publication/273292173_EFFECTS_OF_PRACTICE_OF_PRANAYAMA_ON_CONTROL_OF_LIFE_STYLE_DISORDERS" target="_blank">Effects of Pranayama on Lifestyle Disorders</a></p>
+        <p><a href="https://www.semanticscholar.org/paper/Effect-of-Nadi-Shodhana-Pranayama-on-Respiratory-in-Sivapriya-Subamalani/c925be82cbfcc3b590aa0de9d82880a716631595" target="_blank">Effect of Nadi Shodhana Pranayama on Respiratory Parameters in School Students</a></p>
+        <p><a href="https://www.semanticscholar.org/paper/Effectiveness-of-Nadi-Shodhana-Pranayama-on-Test-of-Mary-Sibi/f81791e0b6b4ae656c20de3b7fb4821671b12ebc" target="_blank">Effectiveness of Nadi Shodhana Pranayama on Test Anxiety among Nursing Students</a></p>
 
     </section>
     <section class="liber-ix-excerpts">
@@ -410,6 +423,17 @@
             <li>Various remarkable phenomena will very probably occur during these practices. They must be carefully analysed and recorded.</li>
         </ol>
     </section>
+    <section class="recommendations">
+        <h3>Further Reading (Personal Recommendations):</h3>
+            <p>The Equinox, Volume 1, Number 1 & Number 4</p>
+            <p>Liber ABA: Book 4, Parts I & II, by A. C.</p>
+            <p>Magick Without Tears, by A. C.</p>
+            <p>8 Lectures on Yoga, by A. C.</p>
+            <p>The Magick of Aleister Crowley, by Lon Milo DuQuette</p>        
+            <p>Autobiography of a Yogi, by Paramahansa Yogananda</p>
+            <p>Tantra Illuminated, by Christopher D. Wallis</p>
+    </section>
+    
     </div>
 
     <div id="customModal" class="modal">
@@ -446,6 +470,7 @@
             leftNostril: document.getElementById('left-nostril'),
             rightNostril: document.getElementById('right-nostril'),
             breathFill: document.getElementById('breath-fill'),
+            breathBar: document.getElementById('breath-bar'),
             instruction: document.getElementById('instruction'),
             timer: document.getElementById('timer'),
             totalTime: document.getElementById('totalTime'),
@@ -459,6 +484,54 @@
             customOut: document.getElementById('customOut'),
             customHold: document.getElementById('customHold')
         };
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let isTickPlaying = false;
+
+        function createSound(frequency, duration) {
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            gainNode.gain.setValueAtTime(globalVolume, audioCtx.currentTime);
+
+            const stopTime = audioCtx.currentTime + duration;
+            const fadeOutTime = 0.05;
+            const fadeOutStartTime = stopTime - fadeOutTime;
+
+            gainNode.gain.linearRampToValueAtTime(0, stopTime);
+
+            oscillator.start();
+            oscillator.stop(stopTime);
+        }
+
+        function playTickSound() {
+            if (soundEnabled && !isTickPlaying) {
+                isTickPlaying = true;
+                createSound(155, 0.1);
+                setTimeout(() => {
+                    isTickPlaying = false;
+                }, 150);
+            }
+        }
+
+        function playPhaseTransitionSound(phase) {
+            if (soundEnabled) {
+                let frequency = 220;
+                let duration = 0.75;
+                if (phase === 'in') frequency = 200;
+                else if (phase === 'out') frequency = 200;
+                else if (phase === 'hold') frequency = 280;
+
+                const delay = isTickPlaying ? 150 : 0;
+                setTimeout(() => {
+                    createSound(frequency, duration);
+                }, delay);
+            }
+        }
+
         function pauseAnimation(element) {
             element.classList.add("paused");
         }
@@ -503,7 +576,17 @@
                 phase === 'out' ? `Breathe out through ${nostril} nostril` :
                 phase === 'in' ? `Breathe in through ${nostril} nostril` :
                 'Hold breath';
+            elements.breathFill.setAttribute("aria-label", `Breath indicator - ${phase}: ${timeLeft} seconds remaining`);
         }
+
+        function updateBreathBarAccessibility(phase, timeLeft, duration) {
+            const percentage = (duration - timeLeft) / duration * 100;
+            elements.breathFill.setAttribute("aria-valuenow", percentage.toFixed(0));
+            elements.breathFill.setAttribute("aria-valuemin", 0);
+            elements.breathFill.setAttribute("aria-valuemax", 100);
+            elements.breathBar.setAttribute("role", "progressbar");
+        }
+
         function updateTimer() {
             if (!isPaused && currentPhase !== 'ready') {
                 timeLeft--;
@@ -553,6 +636,7 @@
                 }
             }
             updateBreathVisualization(currentPhase, currentNostril, timeLeft, config[currentPhase]);
+            updateBreathBarAccessibility(currentPhase, timeLeft, config[currentPhase]);
         }
         function formatTime(seconds, includeHours = false) {
             const h = Math.floor(seconds / 3600);
@@ -585,6 +669,9 @@
                 resumeAnimation(elements.leftNostril);
                 resumeAnimation(elements.rightNostril);
                 resumeAnimation(elements.breathFill);
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
             }
         });
         elements.pauseBtn.addEventListener('click', () => {
@@ -613,6 +700,7 @@
             elements.totalTime.textContent = '00:00:00';
             elements.cyclesCompleted.textContent = '0';
             updateBreathVisualization('ready', currentNostril, 0, 0);
+            updateBreathBarAccessibility('ready', 0, 0);
         });
 
         let customConfig = {};
@@ -621,6 +709,7 @@
         const modalCloseButton = document.querySelector("#customModal .close-button");
         const modalCancelButton = document.querySelector('#customModal .cancel');
         const modalSaveButton = document.querySelector('#customModal .save');
+        const modalContent = document.querySelector('.modal-content');
 
         levelSelect.addEventListener('change', () => {
             if (levelSelect.value === 'custom') {
@@ -661,13 +750,30 @@
             const exhale = parseInt(elements.customOut.value, 10);
             const hold = parseInt(elements.customHold.value, 10);
 
+            // Remove any existing error messages
+            const existingErrorMessage = modalContent.querySelector('.error-message');
+            if (existingErrorMessage) {
+                modalContent.removeChild(existingErrorMessage);
+            }
+
             if (inhale > 0 && exhale > 0) {
                 customConfig = { in: inhale, out: exhale, hold: hold };
                 const selectedOption = levelSelect.options[levelSelect.selectedIndex];
                 selectedOption.textContent = `Custom (In: ${inhale}s, Out: ${exhale}s, Hold: ${hold}s)`;
                 modal.style.display = "none";
             } else {
-                alert("Inhale and Exhale times must be greater than 0.");
+                const errorMessage = document.createElement('p');
+                errorMessage.textContent = "Inhale and Exhale times must be greater than 0.";
+                errorMessage.style.color = 'red';
+                errorMessage.classList.add('error-message');
+                modalContent.insertBefore(errorMessage, modalSaveButton);
+
+                elements.customIn.addEventListener('input', () => {
+                    if (modalContent.contains(errorMessage)) errorMessage.remove();
+                });
+                elements.customOut.addEventListener('input', () => {
+                    if (modalContent.contains(errorMessage)) errorMessage.remove();
+                });
             }
         });
 
@@ -682,35 +788,7 @@
         volumeSlider.addEventListener('input', () => {
             globalVolume = parseFloat(volumeSlider.value);
         });
-        function playTickSound(frequency = 220) {
-            if (!soundEnabled) return;
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-        function playPhaseTransitionSound(phase) {
-            if (!soundEnabled) return;
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(
-                phase === 'in' ? 340 : phase === 'out' ? 300 : 450,
-                audioContext.currentTime
-            );
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            gainNode.gain.setValueAtTime(globalVolume, audioContext.currentTime);
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
-        }
+
         window.onload = () => {
             volumeSlider.value = globalVolume;
         };
