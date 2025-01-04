@@ -151,6 +151,9 @@
             .nostril-circle {
                 width: 165px;
             }
+            #fullscreenBtn {
+            display: none;
+            }
         }
 
         @media (max-width: 480px) {
@@ -161,6 +164,10 @@
             transform: none;
             margin-bottom: 30px;
         }
+
+            #fullscreenBtn {
+            display: none;
+            }
 
         body.fullscreen-mode  .nostril-circle {
                 max-width: 140px;
@@ -176,15 +183,15 @@
             }
 
             h1 {
-                font-size: 28px;
+                font-size: 26px;
             }
 
-            .instruction {
-                font-size: 8px;
+            #instruction {
+                font-size: 13px;
             }
 
-            .stats {
-                font-size: 8px;
+            #stats {
+                font-size: 13px;
             }
 
 
@@ -618,7 +625,7 @@
         <!-- Instruction text -->
         <div id="instruction" class="instruction">Select a level, breathe in and press Start to begin</div>
         <!-- Practice statistics -->
-        <div class="stats">
+        <div id="stats">
             <p>Total Practice Time: <span id="totalTime">00:00:00</span> / Cycles Completed: <span id="cyclesCompleted">0</span></p>
         </div>
         <!-- Main control buttons -->
