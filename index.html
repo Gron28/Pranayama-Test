@@ -71,7 +71,7 @@
         .container {
             text-align: center;
             width: 90%;
-            max-width: 800px;
+            max-width: 1200px;
             margin-bottom: 5px;
             position: relative;
             transition: margin 0.3s ease;
@@ -377,7 +377,7 @@
         /* Collapsible sections */
         .collapsible-section {
             text-align: left;
-            max-width: 800px;
+            max-width: 1000px;
             margin-top: 20px;
             margin-bottom: 40px;
         }
@@ -716,7 +716,7 @@
             <p>If you are pregnant or have health conditions like high blood pressure, asthma, epilepsy, or heart problems, consult a healthcare provider before practicing.</p>
             <h4>This guide is not a substitute for professional medical advice or supervision.</h4>
             <h3 class="sources-links">Sources:</h3>
-            <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3415184/#sec1-5" target="_blank">Health Impacts of Yoga and Pranayama</a></p>
+            <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3415184/" target="_blank">Health Impacts of Yoga and Pranayama</a></p>
             <p><a href="https://philpapers.org/archive/RAVPOL.pdf" target="_blank">Pranayama and its Effects</a></p>
             <p><a href="https://www.researchgate.net/publication/273292173_EFFECTS_OF_PRACTICE_OF_PRANAYAMA_ON_CONTROL_OF_LIFE_STYLE_DISORDERS" target="_blank">Effects of Pranayama on Lifestyle Disorders</a></p>
             <p><a href="https://www.semanticscholar.org/paper/Effect-of-Nadi-Shodhana-Pranayama-on-Respiratory-in-Sivapriya-Subamalani/c925be82cbfcc3b590aa0de9d82880a716631595" target="_blank">Effect of Nadi Shodhana Pranayama on Respiratory Parameters in School Students</a></p>
@@ -1207,7 +1207,7 @@
         // Function to load customizations from local storage
         function loadCustomizations() {
             const savedColors = JSON.parse(localStorage.getItem('customColors'));
-            isDarkMode = JSON.parse(localStorage.getItem('darkMode')) ?? true;
+            isDarkMode = JSON.parse(localStorage.getItem('darkMode'));
 
             if (savedColors) {
                 document.getElementById('leftNostrilColor').value = savedColors.leftNostril;
@@ -1223,6 +1223,7 @@
                 document.getElementById('breathBarFillHex').value = savedColors.breathFill;
                 document.getElementById('breathBarHoldHex').value = savedColors.breathHold;
             }
+
 
             if (isDarkMode) {
                 document.body.classList.add('dark-mode');
@@ -1311,7 +1312,8 @@
             isDarkMode = darkMode;
             document.body.classList.toggle('light-mode', !darkMode);
             document.body.classList.toggle('dark-mode', darkMode);
-            elements.darkModeToggle.textContent = darkMode ? 'Light Mode' : 'Dark Mode';
+            elements.darkModeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
+            
             localStorage.setItem('darkMode', darkMode);
         }
 
@@ -1334,6 +1336,7 @@
         // Initialize settings on page load
         window.onload = () => {
             elements.volumeSlider.value = globalVolume;
+            setDarkMode(true); 
             loadCustomizations();
         };
     </script>
