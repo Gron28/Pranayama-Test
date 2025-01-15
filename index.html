@@ -107,6 +107,7 @@
             background-position-x: 100%;
             background-position-y: 5px;
             transition: border-color 0.3s ease;
+            width: 370px;
         }
 
         body.light-mode select {
@@ -179,7 +180,8 @@
             }
 
             select {
-                width: calc(100% - 20px);
+                width: 330px;
+                font-size: 12px;
             }
 
             h1 {
@@ -689,15 +691,26 @@
     <!-- Context collapsible section -->
     <section class="collapsible-section">
         <div class="collapsible-header">
+            
             <h3>Context:</h3>
             <i class="fas fa-chevron-down toggle-icon open"></i>
         </div>
         <div class="collapsible-content">
+            <div>
             <p>This practice is based on the pranayama exercise described in Aleister Crowley's <a href="https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf" target="_blank">Liber E. vel Exercitiorum, sub figura IX</a>. While the text uses the general term "pranayama", the described technique closely aligns with Nadi Shodhana Pranayama, also known as alternate nostril breathing.</p>
             <p>I would describe the practice as: Sitting in your Asana, a stable and comfortable position, Begin by closing your right nostril with your thumb, exhaling slowly through your left nostril for 20 seconds, then inhaling through the same nostril for 10 seconds. Alternate nostrils and repeat the process. Start with a duration that feels comfortable to you, and gradually work toward an hour.
             Once you can practice level one comfortably for a full hour, move to the next level. Only advance a level once you have maintained comfort and control in the current level for at least an hour.</p>
             <p>The practice area visualizes your breathing. The colored circles represent your nostrils, blue for the left and red for the right. The central bar fills with yellow during inhalation and empties during exhalation. When holding your breath, the bar turns green.</p>
         </div>
+
+        <h3>More Context in Video Format:</h3>
+            <p>For a more detailed explanation of Asana and Pranayama in the context of Thelema, you may find this presentation by Dr. David Shoemaker insightful:</p>
+            <p><a href="https://youtu.be/kgEbIeWRszc?si=KPq1nszLfEZoTOug" target="_blank">Asana and Pranayama - Living Thelema</a></p>
+            <p>Here is a specific practical demonstration of this breathing technique by Dr. Shoemaker:</p>
+            <p><a href="https://youtu.be/qFECdz2WUCI?si=sGBIu0h3q4c2lGmQ" target="_blank">Pranayama Demonstration</a></p>
+
+    </div>
+</div>
     </section>
 
     <!-- Recommendations and precautions collapsible section -->
@@ -792,8 +805,7 @@
             <button type="button" class="cancel">Cancel</button>
         </div>
     </div>
-
-    <script>
+<script>
         // Configuration for practice levels
         const levelConfigs = {
             1: { out: 20, in: 10, hold: 0 },
@@ -804,7 +816,8 @@
         };
 
         // Global variables for timer and practice state
-        let timer;
+        let timerStartTime = 0;
+        let expectedTickTime = 0;
         let currentPhase = 'ready';
         let timeLeft = 0;
         let totalSeconds = 0;
@@ -840,7 +853,7 @@
             customizationPanel: document.getElementById('customizationPanel'),
             fullscreenBtn: document.getElementById('fullscreenBtn'),
             darkModeToggle: document.getElementById('darkModeToggle'),
-            
+
         };
         // Audio context and tick sound state
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -955,11 +968,27 @@
             elements.breathBar.setAttribute("role", "progressbar");
         }
 
+        function scheduleNextTick() {
+            const now = performance.now();
+            const delay = Math.max(0, expectedTickTime - now);
+            timer = setTimeout(updateTimer, delay);
+        }
+
         // Function to update the timer and breath visualization
         function updateTimer() {
             if (!isPaused && currentPhase !== 'ready') {
-                timeLeft--;
-                totalSeconds++;
+                const now = performance.now();
+                const drift = now - expectedTickTime;
+                if (drift > 150) { 
+                    const missedTicks = Math.floor(drift / 1000);
+                    timeLeft -= (missedTicks + 1); 
+                    totalSeconds += (missedTicks + 1);
+                } else {
+                    timeLeft--;
+                    totalSeconds++;
+                }
+                expectedTickTime += 1000;
+
                 elements.totalTime.textContent = formatTime(totalSeconds, true);
                 elements.timer.textContent = formatTime(timeLeft);
 
@@ -973,6 +1002,9 @@
                 if (timeLeft <= 0) {
                     nextPhase();
                 }
+            }
+            if (!isPaused && currentPhase !== 'ready') {
+                scheduleNextTick();
             }
         }
 
@@ -1038,7 +1070,9 @@
                     currentNostril = 'left';
                 }
                 isPaused = false;
-                timer = setInterval(updateTimer, 1000);
+                timerStartTime = performance.now();
+                expectedTickTime = timerStartTime + 1000;
+                scheduleNextTick();
                 elements.startBtn.disabled = true;
                 elements.pauseBtn.disabled = false;
                 elements.resetBtn.disabled = false;
@@ -1053,7 +1087,7 @@
 
         // Event listener for the pause button
         elements.pauseBtn.addEventListener('click', () => {
-            clearInterval(timer);
+            clearTimeout(timer);
             isPaused = true;
             elements.startBtn.disabled = false;
             elements.startBtn.textContent = 'Resume';
@@ -1064,7 +1098,7 @@
 
         // Event listener for the reset button
         elements.resetBtn.addEventListener('click', () => {
-            clearInterval(timer);
+            clearTimeout(timer);
             resetPractice();
         });
 
@@ -1224,7 +1258,6 @@
                 document.getElementById('breathBarHoldHex').value = savedColors.breathHold;
             }
 
-
             if (isDarkMode) {
                 document.body.classList.add('dark-mode');
                 elements.darkModeToggle.textContent = 'Light Mode';
@@ -1282,7 +1315,7 @@
             localStorage.removeItem('darkMode');
             resetCustomizationColors();
             applyCustomizations();
-            setDarkMode(true); // Ensure dark mode is enabled after reset
+            setDarkMode(true); 
         });
 
         function resetCustomizationColors() {
@@ -1313,7 +1346,7 @@
             document.body.classList.toggle('light-mode', !darkMode);
             document.body.classList.toggle('dark-mode', darkMode);
             elements.darkModeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
-            
+
             localStorage.setItem('darkMode', darkMode);
         }
 
@@ -1336,7 +1369,7 @@
         // Initialize settings on page load
         window.onload = () => {
             elements.volumeSlider.value = globalVolume;
-            setDarkMode(true); 
+            setDarkMode(true);
             loadCustomizations();
         };
     </script>
