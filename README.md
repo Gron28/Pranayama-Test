@@ -75,3 +75,7 @@ git push origin main
 ```
 
 Then configure GitHub Pages to use the `/dist` folder in your repo settings.
+
+## License
+
+MIT - Feel free to use, modify, and share.
