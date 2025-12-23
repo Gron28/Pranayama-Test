@@ -1,0 +1,524 @@
+@import 'variables';
+@import 'mixins';
+
+// Root CSS Variables for Theming
+:root {
+  --background-color: #{$color-bg-dark};
+  --text-color: #{$color-text-light};
+  --ida-blue: #{$color-ida-blue};
+  --pingala-red: #{$color-pingala-red};
+  --sushumna-yellow: #{$color-sushumna-yellow};
+  --sushumna-green: #{$color-sushumna-green};
+  --neutral-color: #{$color-neutral-dark};
+  --font-family-base: #{$font-family-base};
+}
+
+// Dark mode theme
+body.dark-mode {
+  --background-color: #{$color-bg-dark};
+  --text-color: #{$color-text-light};
+  --neutral-color: #{$color-neutral-dark};
+}
+
+// Light mode theme
+body.light-mode {
+  --background-color: #{$color-bg-light};
+  --text-color: #{$color-text-dark};
+  --neutral-color: #{$color-bg-light};
+}
+
+// General body styles
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family-base);
+  margin: 0;
+  padding: $spacing-xl;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+  @include transition(background-color);
+}
+
+// Heading and text styles
+h1, h2, h3, p, button, select, .timer, .instruction, .stats {
+  @include themed-text;
+}
+
+// Main container
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 1200px;
+  margin-bottom: $spacing-sm;
+  position: relative;
+  @include transition(margin);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include fullscreen-mode {
+    margin-bottom: 0;
+    margin-top: $spacing-md;
+  }
+}
+
+h1 {
+  margin-bottom: $spacing-md;
+
+  @include fullscreen-mode {
+    display: none;
+  }
+
+  @include media-mobile {
+    font-size: 26px;
+  }
+}
+
+// Level selection dropdown
+.level-select {
+  margin-bottom: $spacing-md;
+
+  @include fullscreen-mode {
+    display: none;
+  }
+}
+
+select {
+  padding: $spacing-sm;
+  font-size: $font-size-base;
+  background-color: var(--neutral-color);
+  color: var(--text-color);
+  border: 1px solid #666;
+  border-radius: 5px;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23F8F0E3" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: $spacing-sm;
+  @include transition(border-color);
+  width: 370px;
+
+  body.light-mode & {
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23101010" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    border-color: #888;
+  }
+
+  @include media-mobile {
+    width: 330px;
+    font-size: 12px;
+  }
+}
+
+// Practice visualization area
+.practice-area {
+  @include flex-center;
+  gap: $spacing-2xl;
+  margin: $spacing-2xl 0;
+  height: 270px;
+  @include transition(all);
+
+  @include fullscreen-mode {
+    margin-top: 60px;
+    margin-bottom: $spacing-md;
+    position: static;
+    transform: none;
+    height: auto;
+  }
+
+  @include media-mobile {
+    @include fullscreen-mode {
+      margin: 0 0 30px 0;
+    }
+  }
+}
+
+// Nostril circles
+.nostril-circle {
+  aspect-ratio: 1 / 1;
+  width: 165px;
+  max-width: 30vw;
+  border-radius: 50%;
+  @include transition(transform, opacity, width);
+
+  @include fullscreen-mode {
+    width: 300px;
+  }
+
+  @include media-tablet {
+    width: 165px;
+  }
+
+  @include media-mobile {
+    @include fullscreen-mode {
+      max-width: 140px;
+    }
+  }
+}
+
+.left-nostril {
+  background-color: var(--ida-blue);
+}
+
+.right-nostril {
+  background-color: var(--pingala-red);
+}
+
+// Breath indicator bar
+.breath-bar {
+  width: 35px;
+  height: 250px;
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden;
+  @include transition(width);
+
+  @include fullscreen-mode {
+    height: 350px;
+    width: 65px;
+  }
+
+  @include media-mobile {
+    height: 150px;
+    max-width: 45px;
+  }
+}
+
+.breath-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--sushumna-yellow);
+  height: 100%;
+  @include transition(height, background-color);
+
+  &.hold {
+    background-color: var(--sushumna-green);
+  }
+}
+
+// Instruction text
+.instruction {
+  font-size: $font-size-large;
+
+  @include media-mobile {
+    font-size: 13px;
+  }
+}
+
+// Timer display
+.timer {
+  font-size: $font-size-lg;
+  margin-bottom: $spacing-md;
+  @include transition(font-size, margin-bottom, top, left, transform);
+  position: relative;
+
+  @include fullscreen-mode {
+    font-size: 70px;
+    position: static;
+    transform: none;
+    margin-top: $spacing-lg;
+  }
+}
+
+// Control buttons
+.controls,
+.extra-controls {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-sm;
+  flex-wrap: wrap;
+}
+
+.controls {
+  margin-bottom: $spacing-md;
+}
+
+.extra-controls {
+  margin-bottom: $spacing-lg;
+}
+
+.control-button {
+  @include button-base;
+
+  body.light-mode & {
+    border-color: var(--text-color);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+// Practice statistics
+.stats {
+  font-size: $font-size-base;
+  @include transition(opacity, top, left, transform);
+  text-align: center;
+  max-width: 600px;
+  display: flex;
+
+  p {
+    margin-bottom: $spacing-lg;
+  }
+
+  @include fullscreen-mode {
+    position: static;
+    transform: none;
+    opacity: 1;
+  }
+
+  @include media-mobile {
+    font-size: 13px;
+  }
+}
+
+// Sound controls
+.sound-controls {
+  margin-top: $spacing-md;
+  @include flex-center;
+  gap: $spacing-lg;
+  flex-wrap: wrap;
+
+  p {
+    margin: 0;
+    font-size: 13px;
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3em;
+    color: var(--text-color);
+    padding: 0;
+  }
+}
+
+#volumeSlider {
+  width: 80px;
+  height: 6px;
+  background: #666;
+  border-radius: 3px;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: var(--sushumna-yellow);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: var(--sushumna-yellow);
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+}
+
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+}
+
+// Sound recommendation text
+.sound-recommendation {
+  margin-bottom: 25px;
+  font-size: 13px;
+}
+
+// Collapsible sections
+.collapsible-section {
+  text-align: left;
+  max-width: 1000px;
+  margin-top: $spacing-xl;
+  margin-bottom: 40px;
+
+  ol {
+    line-height: 1.5;
+    margin-bottom: $spacing-md;
+    font-size: 0.9rem;
+    color: var(--text-color);
+  }
+
+  p {
+    line-height: 1.5;
+    margin-bottom: $spacing-md;
+    font-size: 0.9rem;
+    color: var(--text-color);
+  }
+
+  a {
+    font-weight: bold;
+    color: var(--text-color);
+    text-decoration: underline;
+  }
+}
+
+.collapsible-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: $spacing-xs;
+  border-bottom: 1px solid #555;
+  cursor: pointer;
+  margin-bottom: $spacing-md;
+
+  h3 {
+    margin: 0;
+  }
+
+  .toggle-icon {
+    font-size: 1em;
+    @include transition(transform);
+
+    &.open {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.collapsible-content {
+  overflow: hidden;
+  @include transition(max-height);
+
+  &.collapsed {
+    max-height: 0;
+  }
+}
+
+// Custom breath settings modal
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: var(--neutral-color);
+  color: var(--text-color);
+  margin: 15% auto;
+  padding: $spacing-lg;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 270px;
+  border-radius: 5px;
+  text-align: left;
+
+  label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 0.9rem;
+  }
+
+  input[type="number"] {
+    width: calc(100% - 16px);
+    padding: 6px;
+    margin-bottom: $spacing-md;
+    border: 1px solid #666;
+    border-radius: 4px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 0.9rem;
+  }
+
+  button {
+    @include button-base;
+    margin-top: $spacing-lg;
+    border-color: var(--text-color);
+  }
+}
+
+// Side panel for customizations
+.side-panel {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 250px;
+  background-color: var(--neutral-color);
+  color: var(--text-color);
+  padding: $spacing-lg;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+  z-index: 1000;
+  text-align: left;
+  font-size: 0.9rem;
+
+  h2, h3 {
+    margin-top: 60px;
+    font-size: 1.1rem;
+    margin-bottom: $spacing-md;
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin-top: $spacing-lg;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  input[type="color"] {
+    width: 60%;
+    margin-bottom: $spacing-md;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    height: 25px;
+    border: none;
+    cursor: pointer;
+    background: none;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: 1px solid #aaa;
+      border-radius: 3px;
+    }
+  }
+
+  button {
+    @include button-base;
+    margin-top: $spacing-lg;
+    border-color: var(--text-color);
+  }
+}
+
+// Fullscreen mode adjustments
+@include media-tablet {
+  #fullscreenBtn {
+    display: none;
+  }
+}
+
+@include media-mobile {
+  #fullscreenBtn {
+    display: none;
+  }
+}
