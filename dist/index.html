@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pranayama Practice Guide</title>
+    <meta name="description" content="A guided pranayama practice tool based on Liber E.">
+    <meta name="keywords" content="pranayama, breathing exercise, nadi shodhana, alternate nostril breathing, meditation, Aleister Crowley, Liber E, Thelema, Liber IX">
+    <meta name="application-name" content="Pranayama Practice">
+    <meta name="apple-mobile-web-app-title" content="Pranayama Practice">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#101010">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" media="none" onload="if(media!='all') media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="assets/app.css">
+</head>
+
+
+
+</head>
+<body class="dark-mode">
+    <!-- Main container for the practice tool -->
+    <div class="container">
+        <h1>Pranayama Practice</h1>
+        <!-- Level selection dropdown -->
+        <div class="level-select">
+            <label for="level" style="display: none;">Select Practice Level</label>
+            <select id="level">
+                <option value="1">Level 1 (Out: 20s, In: 10s)</option>
+                <option value="2">Level 2 (Out: 30s, In: 15s)</option>
+                <option value="3">Level 3 (Out: 15s, In: 15s, Hold: 15s)</option>
+                <option value="4">Level 4 (Out: 40s, In: 20s)</option>
+                <option value="5">Level 5 (Out: 20s, In: 10s, Hold: 30s)</option>
+                <option value="custom">Custom</option>
+            </select>
+        </div>
+        <!-- Visualization of the breathing practice -->
+        <section class="practice-area" aria-live="polite">
+            <div id="left-nostril" class="nostril-circle left-nostril" aria-label="Left nostril"></div>
+            <div id="breath-bar" class="breath-bar" aria-label="Breath indicator"> <div id="breath-fill" class="breath-fill"></div>
+            </div>
+            <div id="right-nostril" class="nostril-circle right-nostril" aria-label="Right nostril"></div>
+        </section>
+        <!-- Timer display -->
+        <div id="timer" class="timer">00:00</div>
+        <!-- Instruction text -->
+        <div id="instruction" class="instruction">Select a level, breathe in and press Start to begin</div>
+        <!-- Practice statistics -->
+        <div id="stats">
+            <p>Total Practice Time: <span id="totalTime">00:00:00</span> / Cycles Completed: <span id="cyclesCompleted">0</span></p>
+        </div>
+        <!-- Main control buttons -->
+        <section class="controls">
+            <button id="startBtn" class="control-button" aria-label="Start practice">
+                Start
+            </button>
+            <button id="pauseBtn" class="control-button" aria-label="Pause practice" disabled>
+                Pause
+            </button>
+            <button id="resetBtn" class="control-button" aria-label="Reset practice" disabled>
+                Reset
+            </button>
+        </section>
+        <!-- Extra control buttons -->
+        <section class="extra-controls">
+            <button id="darkModeToggle" class="control-button">Light Mode</button>
+            <button id="fullscreenBtn" class="control-button">Expand View</button>
+            <button id="customizeBtn" class="control-button">Customize</button>
+        </section>
+        <!-- Sound control options -->
+        <section class="sound-controls">
+            <p>Sound Cues</p>
+            <button id="soundBtn" aria-label="Toggle sound cues">
+                <i class="fas fa-volume-mute"></i>
+            </button>
+            <div class="slider-container">
+                <input type="range" id="volumeSlider" min="0" max="0.18" step="0.01" value="0.02" aria-label="Adjust sound volume">
+            </div>
+        </section>
+        <!-- Sound recommendation text -->
+        <div class="sound-recommendation">
+            <p>(Headphones and low volumes recommended)</p>
+        </div>
+    </div>
+
+    <!-- Customization side panel -->
+    <div id="customizationPanel" class="side-panel">
+        <h2>Customization</h2>
+        <h3>Colors</h3>
+        <label for="rightNostrilColor">Right Nostril:</label>
+        <input type="color" id="rightNostrilColor" value="#ff2a00">
+        <input type="text" id="rightNostrilHex" placeholder="#RRGGBB" size="7"><br>
+
+        <label for="leftNostrilColor">Left Nostril:</label>
+        <input type="color" id="leftNostrilColor" value="#004dab">
+        <input type="text" id="leftNostrilHex" placeholder="#RRGGBB" size="7"><br>
+
+        <label for="breathBarFillColor">Breath Fill:</label>
+        <input type="color" id="breathBarFillColor" value="#fee74d">
+        <input type="text" id="breathBarFillHex" placeholder="#RRGGBB" size="7"><br>
+
+        <label for="breathBarHoldColor">Breath Hold:</label>
+        <input type="color" id="breathBarHoldColor" value="#00a550">
+        <input type="text" id="breathBarHoldHex" placeholder="#RRGGBB" size="7"><br>
+
+        <button id="saveChanges">Save Changes</button>
+        <button id="resetChanges">Reset to Default</button>
+    </div>
+
+    <!-- Context collapsible section -->
+    <section class="collapsible-section">
+        <div class="collapsible-header">
+            
+            <h3>Context:</h3>
+            <i class="fas fa-chevron-down toggle-icon open"></i>
+        </div>
+        <div class="collapsible-content">
+            <div>
+            <p>This practice is based on the pranayama exercise described in Aleister Crowley's <a href="https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf" target="_blank">Liber E. vel Exercitiorum, sub figura IX</a>. While the text uses the general term "pranayama", the described technique closely aligns with Nadi Shodhana Pranayama, also known as alternate nostril breathing.</p>
+            <p>I would describe the practice as: Sitting in your Asana, a stable and comfortable position, Begin by closing your right nostril with your thumb, exhaling slowly through your left nostril for 20 seconds, then inhaling through the same nostril for 10 seconds. Alternate nostrils and repeat the process. Start with a duration that feels comfortable to you, and gradually work toward an hour.
+            Once you can practice level one comfortably for a full hour, move to the next level. Only advance a level once you have maintained comfort and control in the current level for at least an hour.</p>
+            <p>The practice area visualizes your breathing. The colored circles represent your nostrils, blue for the left and red for the right. The central bar fills with yellow during inhalation and empties during exhalation. When holding your breath, the bar turns green.</p>
+        </div>
+
+        <h3>More Context in Video Format:</h3>
+            <p>For a more detailed explanation of Asana and Pranayama in the context of Thelema, you may find this presentation by Dr. David Shoemaker insightful:</p>
+            <p><a href="https://youtu.be/kgEbIeWRszc?si=KPq1nszLfEZoTOug" target="_blank">Asana and Pranayama - Living Thelema</a></p>
+            <p>Here is a specific practical demonstration of this breathing technique by Dr. Shoemaker:</p>
+            <p><a href="https://youtu.be/qFECdz2WUCI?si=sGBIu0h3q4c2lGmQ" target="_blank">Pranayama Demonstration</a></p>
+
+    </div>
+</section>
+
+    <!-- Recommendations and precautions collapsible section -->
+    <section class="collapsible-section">
+        <div class="collapsible-header">
+            <h3>Recommendations and Precautions for a Safe Practice:</h3>
+            <i class="fas fa-chevron-down toggle-icon open"></i>
+        </div>
+        <div class="collapsible-content">
+            <p>If you're new to alternate nostril breathing, begin with just 5–10 minutes per session. Gradually increase the time as your comfort and confidence grow.</p>
+            <p></p>
+            <p>Please approach this practice with ease and control. Think of it as guiding your breath, not forcing it. Strive for deep, full, and regular breathing rather than forcing longer durations or perfect timings too quickly.</p>
+            <p>Practice in a quiet, comfortable space, seated with your spine straight. It’s best to practice on an empty stomach to avoid discomfort during prolonged breathing exercises.</p>
+            <p>Listen to your body. If you experience discomfort, dizziness, or shortness of breath, stop the practice and rest.</p>
+            <p>If done improperly, especially rushed or overly intense pranayama can cause hyperventilation and may overactivate the sympathetic nervous system, leading to stress on the body. Avoid prolonged or rapid breathing without guidance.</p>
+            <p>If you are pregnant or have health conditions like high blood pressure, asthma, epilepsy, or heart problems, consult a healthcare provider before practicing.</p>
+            <h4>This guide is not a substitute for professional medical advice or supervision.</h4>
+            <h3 class="sources-links">Sources:</h3>
+            <p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3415184/" target="_blank">Health Impacts of Yoga and Pranayama</a></p>
+            <p><a href="https://philpapers.org/archive/RAVPOL.pdf" target="_blank">Pranayama and its Effects</a></p>
+            <p><a href="https://www.researchgate.net/publication/273292173_EFFECTS_OF_PRACTICE_OF_PRANAYAMA_ON_CONTROL_OF_LIFE_STYLE_DISORDERS" target="_blank">Effects of Pranayama on Lifestyle Disorders</a></p>
+            <p><a href="https://www.semanticscholar.org/paper/Effect-of-Nadi-Shodhana-Pranayama-on-Respiratory-in-Sivapriya-Subamalani/c925be82cbfcc3b590aa0de9d82880a716631595" target="_blank">Effect of Nadi Shodhana Pranayama on Respiratory Parameters in School Students</a></p>
+            <p><a href="https://www.semanticscholar.org/paper/Effectiveness-of-Nadi-Shodhana-Pranayama-on-Test-of-Mary-Sibi/f81791e0b6b4ae656c20de3b7fb4821671b12ebc" target="_blank">Effectiveness of Nadi Shodhana Pranayama on Test Anxiety among Nursing Students</a></p>
+        </div>
+    </section>
+
+    <!-- Excerpt from Liber E. collapsible section -->
+    <section class="collapsible-section">
+        <div class="collapsible-header">
+            <h3>Excerpt from LIBER E. VEL EXERCITIORVM SVB FIGVRA IX:</h3>
+            <i class="fas fa-chevron-down toggle-icon open"></i>
+        </div>
+        <div class="collapsible-content">
+            <h3>Pranayama—Regularisation of the Breathing</h3>
+            <ol>
+                <li>At rest. in one of your positions, close the right nostril with the thumb of the right hand and breathe out slowly and completely through the left nostril, while your watch marks 20 seconds. Breathe in through the same nostril for 10 seconds. Changing hands, repeat with the other nostril. Let this be continuous for one hour.</li>
+                <li>When this is quite easy to you, increase the periods to 30 and 15 seconds.</li>
+                <li>When this is quite easy to you, but not before, breathe out for 15 seconds, in for 15 seconds, and hold the breath for 15 seconds.</li>
+                <li>When you can do this with perfect ease and comfort for a whole hour, practise breathing out for 40, in for 20 seconds.</li>
+                <li>This being attained, practise breathing out for 20, in for 10, holding the breath for 30 seconds. When this has become perfectly easy to you, you may be admitted for examination, and should you pass, you will be instructed in more complex and difficult practices.</li>
+                <li>You will find that the presence of food in the stomach, even in small quantities, makes the practices very difficult.</li>
+                <li>Be very careful never to overstrain your powers; especially never get so short of breath that you are compelled to breathe out jerkily or rapidly.</li>
+                <li>Strive after depth, fulness, and regularity of breathing.                <li>Various remarkable phenomena will very probably occur during these practices. They must be carefully analysed and recorded.</li>
+            </ol>
+            <h4>From: <a href="https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf" target="_blank">https://keepsilence.org/the-equinox/1.1/liber-exercitiorum_low.pdf</a></h4>
+        </div>
+    </section>
+
+    <!-- About collapsible section -->
+    <section class="collapsible-section">
+        <div class="collapsible-header">
+            <h3>About:</h3>
+            <i class="fas fa-chevron-down toggle-icon open"></i>
+        </div>
+        <div class="collapsible-content">
+            <p>I started to develop this simple tool to help my own pranayama practice and also to practice web design/dev at the same time, following this very specific iteration of the exercise. After reaching a point where it was functional and testing it over extended periods of time, I realized its potential and that it could definitely be useful for other practitioners out there, so on a whim I decided to publish it and to make it open source, free to the public, hoping it can enhance and motivate your practice in some way or another, like it did with mine.</p>
+            <p>You can find the source code for this project on <a href="https://github.com/Gron28/Pranayama-Test">GitHub</a>.</p>
+            <p>For inquiries or feedback, feel free to <a href="https://mail.google.com/mail/?view=cm&fs=1&to=villadafelipe28@gmail.com" target="_blank" >contact me</a>.</p>
+            <p>If you find this guide helpful and wish to support, you can do so via <a href="https://paypal.me/Gron28">PayPal</a>.</p>
+            <p>To learn more about me you can check out my <a href="https://gron28.github.io/Portfolio-Website" target="_blank" >website/portfolio</a> (Im still working on it, it is mainly UX/UI design right now, but it is slowly evolving toward my vision of it).</p>
+        </div>
+    </section>
+
+    <!-- Further reading recommendations collapsible section -->
+    <section class="collapsible-section">
+        <div class="collapsible-header">
+            <h3>Further Reading (Personal Recommendations)</h3>
+            <i class="fas fa-chevron-down toggle-icon open"></i>
+        </div>
+        <div class="collapsible-content">
+            <p>Liber ABA: Book 4, Parts I & II, by A. C.</p>
+            <p>Magick Without Tears, by A. C.</p>
+            <p>8 Lectures on Yoga, by A. C.</p>
+            <p>The Magick of Aleister Crowley, by Lon Milo DuQuette</p>
+            <p>Autobiography of a Yogi, by Paramahansa Yogananda</p>
+            <p>Tantra Illuminated, by Christopher D. Wallis</p>
+        </div>
+    </section>
+
+    <!-- Custom breath settings modal -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button"></span>
+            <h2>Custom Breath Settings</h2>
+            <label for="customIn">Inhale (seconds):</label>
+            <input type="number" id="customIn" min="1">
+            <label for="customOut">Exhale (seconds):</label>
+            <input type="number" id="customOut" min="1">
+            <label for="customHold">Hold (seconds):</label>
+            <input type="number" id="customHold" min="0">
+            <button type="button" class="save">Save</button>
+            <button type="button" class="cancel">Cancel</button>
+        </div>
+    </div>
+
+<script type="module">
+  import { init } from './assets/app.js';
+  window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
